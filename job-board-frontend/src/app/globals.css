@@ -3,25 +3,71 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F8F4E3;
+  --foreground: #060B0F;
+  --shadow: 18px 21px 40px 0px rgba(245, 200, 0, 0.15);
+  --input: 0px 2px 4px 0px rgba(0, 0, 0, 0.15), 2px 2px 20px 0px rgba(245, 200, 0, 0.10) inset;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #060B0F;
+    --foreground: #F8F4E3;
+    --shadow: 18px 21px 40px 0px rgba(245, 200, 0, 0.30);
+    --input: 0px 2px 4px 0px rgba(245, 200, 0, 0.30), 2px 2px 20px 0px rgba(255, 255, 255, 0.103) inset;
   }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/*style des cartes des offres d'emploi*/
+.add-card {
+  background: var(--background);
+  border-radius: 10px;
+  border-left: 5px solid #FFD700;
+  box-shadow: var(--shadow);
+  padding: 2.5rem;
+}
+
+/* style des boutons */
+.button {
+  background: var(--background);
+  border-radius: 8px;
+  border: 1px solid #F5C800;
+  /* className="button transition-colors hover:underline hover:text-info hover:bg-interact text-fullblack dark:text-fullwhite flex items-center justify-center text-sm" */
+}
+
+.input {
+  border-radius: 5px;
+  border-left: 2px solid #F5C800;
+  box-shadow: var(--input);
+  padding: 0.3rem;
+  /* className="input bg-fullwhite dark:bg-fullblack text-fullblack dark:text-fullwhite flex items-center justify-center text-sm placeholder:italic placeholder:text-foreground" */
+}
+
+/* style des titres */
+
+h1 {
+  font-weight: 700;
+}
+
+h2 {
+  font-weight: 600;
+}
+
+h3 {
+  font-weight: 400;
+}
+
+p {
+  font-weight: 300;
 }
