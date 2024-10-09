@@ -2,8 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const HttpException = require('./utils/HttpException.utils');
-const errorMiddleware = require('./middlewares/errors.middleware');
-const userRouter = require('./routes/users.route');
+const errorMiddleware = require('./middlewares/error.middleware');
+const userRouter = require('./routes/user.route');
 
 // Init express
 const app = express();
