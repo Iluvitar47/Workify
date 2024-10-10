@@ -11,6 +11,18 @@ type Advertisement = {
     working_times: string;
     company_id: number;
     created_at: string;
+    company?: Company; 
+};
+
+type Company = {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    business_sector: string;
+    location: string;
+    employees: number;
+    description: string;
 };
 
 const AdvertisementCards: React.FC = () => {
@@ -23,36 +35,51 @@ const AdvertisementCards: React.FC = () => {
         const fetchAdvertisements = async () => {
             try {
                 setTimeout(() => {
+                    const fakeCompanies: Company[] = [
+                        {
+                            id: 1,
+                            name: 'Mediamétrie',
+                            email: 'contact@techinnovators.com',
+                            phone: '0123456789',
+                            business_sector: 'Technologie',
+                            location: 'Paris, France',
+                            employees: 200,
+                            description: 'Mediametrie is the leader in audience measurement in France.',
+                        },
+                        {
+                            id: 2,
+                            name: 'La gendarmerie nationale',
+                            email: 'contact@designpros.com',
+                            phone: '0987654321',
+                            business_sector: 'Design',
+                            location: 'Lyon, France',
+                            employees: 50,
+                            description: 'La gendarmerie nationale is a French law enforcement agency.',
+                        },
+                    ];
+
                     const fakeData: Advertisement[] = [
                         {
                             id: 1,
                             title: 'Développeur Full Stack',
-                            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit... Lorem ipsum dolor sit amet, consectetur adipiscing elit... Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
                             wages: 55000,
-                            location: 'Paris, France',
+                            location: 'Levallois-Perret, France',
                             working_times: 'Temps plein',
                             company_id: 1,
                             created_at: '2024-01-01 10:00:00',
+                            company: fakeCompanies.find(company => company.id === 1), 
                         },
                         {
                             id: 2,
                             title: 'Designer UX/UI',
-                            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit... Lorem ipsum dolor sit amet, consectetur adipiscing elit... Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
                             wages: 45000,
                             location: 'Lyon, France',
                             working_times: 'Temps partiel',
                             company_id: 2,
                             created_at: '2024-02-15 15:30:00',
-                        },
-                        {
-                            id: 3,
-                            title: 'Designer UX/UI',
-                            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                            wages: 45000,
-                            location: 'Lyon, France',
-                            working_times: 'Temps partiel',
-                            company_id: 2,
-                            created_at: '2024-02-15 15:30:00',
+                            company: fakeCompanies.find(company => company.id === 2), 
                         },
                     ];
 
@@ -85,17 +112,22 @@ const AdvertisementCards: React.FC = () => {
             {advertisements.map((ad) => (
                 <div key={ad.id} className="add-card pb-5 my-5 mx-6 sm:mx-12 p-2 sm:p-4 ">
                     <h1 className="text-2xl font-bold">{ad.title}</h1>
-                    <p className="mt-2 text-sm text-gray-500"><strong>Lieu :</strong> {ad.location}</p>
+                    {ad.company && (
+                        <h2 className="mt-2 text-xl text-info">
+                            {ad.company.name} 
+                        </h2>
+                    )}
+                    <p className="mt-2 text-base"><strong>Lieu :</strong> {ad.location}</p>
                     {expandedIds.includes(ad.id) ? (
                         <>
-                            <p className="mt-2 text-sm text-gray-500">
+                            <p className="mt-2 text-base">
                                 <strong>Description :</strong> {ad.description}
                             </p>
-                            <p className="mt-2 text-sm text-gray-500"><strong>Salaire :</strong> {ad.wages} €/an</p>
-                            <p className="mt-2 text-sm text-gray-500"><strong>Horaires :</strong> {ad.working_times}</p>
+                            <p className="mt-2 text-base"><strong>Salaire :</strong> {ad.wages} €/an</p>
+                            <p className="mt-2 text-base"><strong>Horaires :</strong> {ad.working_times}</p>
                         </>
                     ) : (
-                        <p className="mt-2 text-sm text-gray-500">
+                        <p className="mt-2 text-base">
                             <strong>Description :</strong> {ad.description.substring(0, 100)}...
                         </p>
                     )}
