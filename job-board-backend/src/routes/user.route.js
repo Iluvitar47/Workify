@@ -9,7 +9,7 @@ const { createUserSchema, updateUserSchema, validateLogin } = require('../middle
 
 router.get('/', awaitHandlerFactory(userController.getAllUsers)); // localhost:5558/api/v1/users
 router.get('/id/:id', awaitHandlerFactory(userController.getUserById)); // localhost:5558/api/v1/users/id/:id
-router.get('/whoami', auth(), awaitHandlerFactory(userController.getCurrentUser)); // localhost:5558/api/v1/users/whoami
+router.get('/current', auth(), awaitHandlerFactory(userController.getCurrentUser)); // localhost:5558/api/v1/users/current
 router.post('/', createUserSchema, awaitHandlerFactory(userController.createUser)); // localhost:5558/api/v1/users
 router.patch('/id/:id', auth(Role.Admin), updateUserSchema, awaitHandlerFactory(userController.updateUser)); // localhost:5558/api/v1/users/id/:id
 router.delete('/id/:id', auth(Role.Admin), awaitHandlerFactory(userController.deleteUser)); // localhost:5558/api/v1/users/id/:id
