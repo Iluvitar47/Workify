@@ -7,14 +7,9 @@ dotenv.config();
 class CompanyController {
     getAllCompanies = async (req, res, next) => {
         let companyList = await CompanyModel.find();
-        if (!companyList.lenght) {
+        if (!companyList.length) {
             throw new HttpException(404, 'Companies not found');
         }
-
-        companyList = companyList.map(company => {
-            const { password, ...companyWithoutPassword } = company;
-            return companyWithoutPassword;
-        });
 
         res.send(companyList);
     }
@@ -25,15 +20,11 @@ class CompanyController {
             throw new HttpException(404, 'Company not found');
         }
 
-        const { password, ...companyWithoutPassword } = company;
-
-        res.send(companyWithoutPassword);
+        res.send(company);
     }
 
     createCompany = async (req, res, next) => {
         this.checkValidation(req);
-
-        await this.hashPassword(req);
 
         const result = await CompanyModel.create(req.body);
 
@@ -41,22 +32,21 @@ class CompanyController {
             throw new HttpException(500, 'Something went wrong');
         }
 
-        res.status(201).send('Company was created!');
+        res.status(201).send('Company has been created!');
     }
 
     updateCompany = async (req, res, next) => {
         this.checkValidation(req);
 
-        await this.hashPassword(req);
-
-        const { confirm_password, ...restOfUpdates } = req.body;
+        const restOfUpdates = req.body;
+        console.log('restOfUpdates:', restOfUpdates);
 
         const result = await CompanyModel.update(restOfUpdates, req.params.id);
         if (!result) {
             throw new HttpException(404, 'Something went wrong');
         }
 
-        res.status(204).send();
+        res.status(204).send('Company has been updated!');
     }
 
     deleteCompany = async (req, res, next) => {

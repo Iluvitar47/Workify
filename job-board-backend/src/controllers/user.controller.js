@@ -49,7 +49,7 @@ class UserController {
             throw new HttpException(500, 'Something went wrong');
         }
 
-        res.status(201).send('User was created!');
+        res.status(201).send('User has been created!');
     };
 
     updateUser = async (req, res, next) => {
@@ -65,12 +65,7 @@ class UserController {
             throw new HttpException(404, 'Something went wrong');
         }
 
-        const { affectedRows, changeRows, info } = result;
-
-        const message = !affectedRows ? 'User not found' :
-            affectedRows && changeRows ? 'User updated successfully' : 'Updated field';
-
-        res.status(204).send({ message, info });
+        res.status(204).send('User has been updated');
     };
 
     deleteUser = async (req, res, next) => {
