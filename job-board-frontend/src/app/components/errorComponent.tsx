@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import React from 'react';
 
@@ -7,18 +9,18 @@ const ErrorComponent = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/v1/users');
-      
+      const response = await fetch('http://localhost:5558/api/v1/users');
+
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Unknown error occurred');
+        throw new Error(errorData.message || 'Something went wrong');
       }
 
       const data = await response.json();
       console.log('Data received: ', data);
-    } catch (err: unknown) {  
+    } catch (err: unknown) {
       if (err instanceof Error) {
-        setError(err.message);  
+        setError(err.message);
       } else {
         setError('An unknown error occurred');
       }
