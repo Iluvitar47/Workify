@@ -21,12 +21,21 @@ class UserModel {
     findOne = async (params) => {
         const { columnSet, values } = multipleColumnSet(params)
 
-        const sql = `SELECT * FROM ${this.tableName}
+        let sql = `SELECT * FROM ${this.tableName}
         WHERE ${columnSet}`;
 
         const result = await query(sql, [...values]);
 
         return result[0];
+    }
+
+    search = async (params) => {
+        const { columnSet, values } = multipleColumnSet(params);
+
+        const sql = `SELECT * FROM ${this.tableName} WHERE ${columnSet}`;
+
+        const result = await query(sql, [...values]);
+        return result;
     }
 
     create = async ({ permission = Role.Applicants, firstname, lastname, email, phone, experiences, studies, skills, business_sector, target_job, location, password }) => {
@@ -42,14 +51,14 @@ class UserModel {
     update = async (params, id) => {
         const { columnSet, values } = multipleColumnSet(params)
 
-        const sql = `UPDATE ${this.tableName} SET ${columnSet} WHERE id = ?`;
+        let sql = `UPDATE ${this.tableName} SET ${columnSet} WHERE id = ?`;
         const result = await query(sql, [...values, id]);
 
         return result;
     }
 
     delete = async (id) => {
-        const sql = `DELETE FROM ${this.tableName}
+        let sql = `DELETE FROM ${this.tableName}
         WHERE id = ?`;
 
         const result = await query(sql, [id]);

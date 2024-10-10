@@ -32,6 +32,20 @@ class UserController {
         res.send(userWithoutPassword);
     };
 
+    searchUser = async (req, res, next) => {
+        const users = await UserModel.search(req.query);
+        if (!users.length) {
+            throw new HttpException(404, 'User not found');
+        }
+    
+        const usersWithoutPassword = users.map(user => {
+            const { password, ...userWithoutPassword } = user;
+            return userWithoutPassword;
+        });
+    
+        res.send(usersWithoutPassword);
+    };
+
     getCurrentUser = async (req, res, next) => {
         const { password, ...userWithoutPassword } = req.currentUser;
 
