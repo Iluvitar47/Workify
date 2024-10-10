@@ -23,6 +23,15 @@ class CompanyController {
         res.send(company);
     }
 
+    searchCompany = async (req, res, next) => {
+        const companies = await CompanyModel.search(req.query);
+        if (!companies.length) {
+            throw new HttpException(404, 'Company not found');
+        }
+    
+        res.send(companies);
+    }
+
     createCompany = async (req, res, next) => {
         this.checkValidation(req);
 
@@ -39,7 +48,6 @@ class CompanyController {
         this.checkValidation(req);
 
         const restOfUpdates = req.body;
-        console.log('restOfUpdates:', restOfUpdates);
 
         const result = await CompanyModel.update(restOfUpdates, req.params.id);
         if (!result) {

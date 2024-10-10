@@ -28,6 +28,15 @@ class CompanyModel {
         return result[0];
     }
 
+    search = async (params) => {
+        const { columnSet, values } = multipleColumnSet(params);
+
+        const sql = `SELECT * FROM ${this.tableName} WHERE ${columnSet}`;
+
+        const result = await query(sql, [...values]);
+        return result;
+    }
+
     create = async ({ name, email, phone, business_sector, location, employees, description }) => {
         const sql = `INSERT INTO ${this.tableName}
         (name, email, phone, business_sector, location, employees, description) VALUES (?,?,?,?,?,?,?)`;
