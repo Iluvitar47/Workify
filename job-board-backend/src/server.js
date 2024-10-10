@@ -24,6 +24,7 @@ app.options('*', cors());
 // Setting Port
 const PORT = process.env.PORT || 3000;
 
+// Setting routes
 app.use(`/api/v1/users`, userRouter);
 app.use(`/api/v1/companies`, companyRouter);
 
