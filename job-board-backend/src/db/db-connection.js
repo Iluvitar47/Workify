@@ -1,10 +1,10 @@
 const dotenv = require('dotenv');
 dotenv.config();
-const mysql = require('mysql');
+const mysql2 = require('mysql2');
 
 class DBConnection {
     constructor() {
-        this.db = mysql.createPool({
+        this.db = mysql2.createPool({
             host: process.env.DB_HOST,
             user: process.env.DB_USER,
             password: process.env.DB_PASS,
@@ -34,7 +34,7 @@ class DBConnection {
         });
     }
 
-    query = async (SqlString, values) => {
+    query = async (sql, values) => {
         return new Promise((resolve, reject) => {
             const callback = (error, result) => {
                 if (error) {
@@ -44,7 +44,7 @@ class DBConnection {
                 resolve(result);
             }
             // Execute the query
-            this.db.execute(SqlString, values, callback);
+            this.db.execute(sql, values, callback);
         }).catch(err => {
             const mysqlErrorList = Object.keys(HttpStatusCodes);
             // Convert the error

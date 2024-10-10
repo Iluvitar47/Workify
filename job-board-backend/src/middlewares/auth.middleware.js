@@ -2,7 +2,6 @@ const UserModel = require('../models/user.model');
 const HttpException = require('../utils/HttpException.utils');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-const userModel = require('../models/user.model');
 dotenv.config();
 
 const auth = (...roles) => {
@@ -26,16 +25,16 @@ const auth = (...roles) => {
                 throw new HttpException(401, 'Authentication failed!');
             }
 
-            const ownerAuthorized = req.params.id === user_id;
+            const ownerAuthorized = req.params.id === user.id;
 
-            if (!ownerAuthorized && roles.length && !roles.includes(user.role)) {
+            if (!ownerAuthorized && roles.length && !roles.includes(user.permission)) {
                 throw new HttpException(401, 'Unauthorized');
             }
 
             req.currentUser = user;
             next();
         } catch (err) {
-            e.status = 401;
+            err.status = 401;
             next(err);
         }
     }

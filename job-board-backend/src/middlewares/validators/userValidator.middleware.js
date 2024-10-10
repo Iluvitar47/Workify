@@ -27,10 +27,6 @@ exports.createUserSchema = [
         .notEmpty()
         .isLength({ min: 8 })
         .withMessage('Password should be at least 8 characters'),
-    body('confirm_password')
-        .exists()
-        .custom((value, { req }) => value === req.body.password)
-        .withMessage('Password does not match'),
     body('phone')
         .exists()
         .withMessage('Phone number is required')
@@ -39,32 +35,32 @@ exports.createUserSchema = [
     body('experiences')
         .exists()
         .withMessage('Experiences is required')
-        .isAlpha()
+        .isString()
         .withMessage('Experiences must be only alphabetic'),
     body('studies')
         .exists()
         .withMessage('Studies is required')
-        .isAlpha()
+        .isString()
         .withMessage('Studies must be only alphabetic'),
     body('skills')
         .exists()
         .withMessage('Skills is required')
-        .isAlpha()
+        .isString()
         .withMessage('Skills must be only alphabetic'),
     body('business_sector')
         .exists()
         .withMessage('Business sector is required')
-        .isAlpha()
+        .isString()
         .withMessage('Business sector must be only alphabetic'),
     body('target_job')
         .exists()
         .withMessage('Target job is required')
-        .isAlpha()
+        .isString()
         .withMessage('Target job must be only alphabetic'),
     body('location')
         .exists()
         .withMessage('Location is required')
-        .isAlpha()
+        .isString()
         .withMessage('Location must be only alphabetic'),    
 ]
 
@@ -91,37 +87,33 @@ exports.updateUserSchema = [
         .notEmpty()
         .isLength({ min: 8 })
         .withMessage('Password should be at least 8 characters'),
-    // body('confirm_password')
-    //     .optional()
-    //     .custom((value, { req }) => value === req.body.password)
-    //     .withMessage('Password does not match'),
     body('phone')
         .optional()
         .isMobilePhone()
         .withMessage('Invalid phone number'),
     body('experiences')
         .optional()
-        .isAlpha()
+        .isString()
         .withMessage('Experiences must be only alphabetic'),
     body('studies')
         .optional()
-        .isAlpha()
+        .isString()
         .withMessage('Studies must be only alphabetic'),
     body('skills')
         .optional()
-        .isAlpha()
+        .isString()
         .withMessage('Skills must be only alphabetic'),
     body('business_sector')
         .optional()
-        .isAlpha()
+        .isString()
         .withMessage('Business sector must be only alphabetic'),
     body('target_job')
         .optional()
-        .isAlpha()
+        .isString()
         .withMessage('Target job must be only alphabetic'),
     body('location')
         .optional()
-        .isAlpha()
+        .isString()
         .withMessage('Location must be only alphabetic'),
     body()
         .custom(value => {

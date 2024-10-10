@@ -26,7 +26,7 @@ const PORT = process.env.PORT || 3000;
 app.use(`/api/v1/users`, userRouter);
 
 // 404 error
-app.call('*', (req, res, next) => {
+app.all('*', (req, res, next) => {
   const err = new HttpException(404, 'Endpoint Not Found');
   next(err);
 });

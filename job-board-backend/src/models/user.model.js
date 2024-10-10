@@ -29,11 +29,11 @@ class UserModel {
         return result[0];
     }
 
-    create = async ({ first_name, last_name, email, password, phone, experiences, studies, skills, business_sector, target_job, location, role = Role.Applicants }) => {
+    create = async ({ permission = Role.Applicants, firstname, lastname, email, phone, experiences, studies, skills, business_sector, target_job, location, password }) => {
         const sql = `INSERT INTO ${this.tableName}
-        (first_name, last_name, email, password, phone, experiences, studies, skills, business_sector, target_job, location, role) VALUES (?,?,?,?)`;
+        (permission, firstname, lastname, email, phone, experiences, studies, skills, business_sector, target_job, location, password) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`;
 
-        const result = await query(sql, [first_name, last_name, email, password, phone, experiences, studies, skills, business_sector, target_job, location, role]);
+        const result = await query(sql, [permission, firstname, lastname, email, phone, experiences, studies, skills, business_sector, target_job, location, password]);  
         const affectedRows = result ? result.affectedRows : 0;
 
         return affectedRows;
@@ -42,8 +42,7 @@ class UserModel {
     update = async (params, id) => {
         const { columnSet, values } = multipleColumnSet(params)
 
-        const sql = `UDPATE ${this.tableName} SET ${columnSet} WHERE id = ?`;
-
+        const sql = `UPDATE ${this.tableName} SET ${columnSet} WHERE id = ?`;
         const result = await query(sql, [...values, id]);
 
         return result;
