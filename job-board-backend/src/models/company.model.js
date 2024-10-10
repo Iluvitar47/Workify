@@ -28,19 +28,19 @@ class CompanyModel {
         return result[0];
     }
 
-    create = async ({ name, email, phone, employees, location, description }) => {
+    create = async ({ name, email, phone, business_sector, location, employees, description }) => {
         const sql = `INSERT INTO ${this.tableName}
-        (name, email, phone, employees, location, description) VALUES (?,?,?,?,?,?)`;
+        (name, email, phone, business_sector, location, employees, description) VALUES (?,?,?,?,?,?,?)`;
 
-        const result = await query(sql, [name, email, phone, employees, location, description]);  
+        const result = await query(sql, [name, email, phone, business_sector, location, employees, description]);  
         const affectedRows = result ? result.affectedRows : 0;
 
         return affectedRows;
     }
 
     update = async (params, id) => {
-        const { columnSet, values } = multipleColumnSet(params)
-
+        const { columnSet, values } = multipleColumnSet(params);
+        
         const sql = `UPDATE ${this.tableName} SET ${columnSet} WHERE id = ?`;
         const result = await query(sql, [...values, id]);
 
