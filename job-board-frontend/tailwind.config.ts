@@ -16,7 +16,7 @@ const config: Config = {
       info: '#E71D36',
     },
     fontFamily: {
-      poppins: ['Poppins', 'sans-serif'],
+      sans: ['Poppins', 'sans-serif'],
     },
     extend: {
       colors: {
