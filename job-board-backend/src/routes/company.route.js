@@ -8,10 +8,10 @@ const awaitHandlerFactory = require('../middlewares/awaitHandlerFactory.middlewa
 const { createCompanySchema, updateCompanySchema } = require('../middlewares/validators/companyValidator.middleware');
 
 router.get('/', auth(Role.Admin), awaitHandlerFactory(companyController.getAllCompanies)); // localhost:5558/api/v1/companies
-router.get('/id/:id', auth(Role.Admin), awaitHandlerFactory(companyController.getCompanyById)); // localhost:5558/api/v1/companies/id/:id
+router.get('/:id', auth(Role.Admin), awaitHandlerFactory(companyController.getCompanyById)); // localhost:5558/api/v1/companies/:id
 router.get('/search', auth(Role.Admin), awaitHandlerFactory(companyController.searchCompany)); // localhost:5558/api/v1/companies/search
 router.post('/', auth(Role.Admin), createCompanySchema, awaitHandlerFactory(companyController.createCompany)); // localhost:5558/api/v1/companies
-router.patch('/id/:id', auth(Role.Admin), updateCompanySchema, awaitHandlerFactory(companyController.updateCompany)); // localhost:5558/api/v1/companies/id/:id
-router.delete('/id/:id', auth(Role.Admin), awaitHandlerFactory(companyController.deleteCompany)); // localhost:5558/api/v1/companies/id/:id
+router.patch('/:id', auth(Role.Admin), updateCompanySchema, awaitHandlerFactory(companyController.updateCompany)); // localhost:5558/api/v1/companies/:id
+router.delete('/:id', auth(Role.Admin), awaitHandlerFactory(companyController.deleteCompany)); // localhost:5558/api/v1/companies/:id
 
 module.exports = router;
