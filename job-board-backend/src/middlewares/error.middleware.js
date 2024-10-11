@@ -1,7 +1,7 @@
 function errorMiddleware(error, req, res, next) {
     let { status = 500, message, data } = error;
 
-    // Think to delete it
+    // Think to delete it when deploying
     console.log(`[Error] ${error}`);
 
     // If the status code is 500, change the message to "Internal server error"
