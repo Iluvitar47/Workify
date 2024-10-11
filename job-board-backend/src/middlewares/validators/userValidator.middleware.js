@@ -19,8 +19,12 @@ exports.createUserSchema = [
         .withMessage('Your email is invalid')
         .normalizeEmail(),
     body('permission')
-        .isIn([Role.Admin, Role.Applicants])
-        .withMessage('Invalid role type'),
+        .custom((value) => {
+            if (value === Role.Admin) {
+                throw new Error('Not allowed!');
+            }
+            return true;
+        }),
     body('password')
         .exists()
         .withMessage('Password is required')
