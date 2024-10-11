@@ -5,9 +5,11 @@ import type { Company } from '../../models/companies.model';
 import type { Advertisement } from '../../models/advertisements.model';
 import MiddlewareCheckError from '../../middlewares/error.middleware';
 
+
 const AdvertisementCards: React.FC = () => {
   const [expandedIds, setExpandedIds] = useState<number[]>([]);
-  const advertisementsRoute = 'http://localhost:5558/api/v1/advertisements';
+  const urlApi = process.env.NEXT_PUBLIC_URL_API;
+  const advertisementsRoute = `${urlApi}/advertisements`;
 
   const toggleExpand = (id: number) => { 
     setExpandedIds((prevExpandedIds) =>
@@ -23,7 +25,9 @@ const AdvertisementCards: React.FC = () => {
         {advertisements.map((ad) => (
           <MiddlewareCheckError
             key={ad.id}
-            route={`http://localhost:5558/api/v1/companies/id/${ad.company_id}`}
+            route={`${urlApi}/companies/id/${ad.company_id}`}
+            method='GET'
+            body={undefined}
             render={(companyData) => {
               const company = companyData as Company;
 
@@ -74,6 +78,8 @@ const AdvertisementCards: React.FC = () => {
   return (
     <MiddlewareCheckError
       route={advertisementsRoute}
+      method='GET'
+      body={undefined}
       render={(advertisements) => {
         const ads = advertisements as Advertisement[];
         return renderAdvertisementsWithCompanies(ads);
