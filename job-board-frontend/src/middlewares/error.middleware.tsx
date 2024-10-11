@@ -36,7 +36,7 @@ const useFetchData = <T,>(url: string) => {
   return { data, error };
 };
 
-const MiddlewareComponent = <T,>({ route, render }: { route: string; render: (data: T) => JSX.Element }) => {
+const MiddlewareCheckError = <T,>({ route, render }: { route: string; render: (data: T) => JSX.Element }) => {
   const { data, error } = useFetchData<T>(route);
 
   return (
@@ -51,4 +51,4 @@ const MiddlewareComponent = <T,>({ route, render }: { route: string; render: (da
   );
 };
 
-export default MiddlewareComponent;
+export default MiddlewareCheckError;
