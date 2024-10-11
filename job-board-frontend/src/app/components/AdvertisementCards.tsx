@@ -23,7 +23,7 @@ const AdvertisementCards: React.FC = () => {
         {advertisements.map((ad) => (
           <MiddlewareCheckError
             key={ad.id}
-            route={`http://localhost:5558/api/v1/companies/${ad.company_id}`}
+            route={`http://localhost:5558/api/v1/companies/id/${ad.company_id}`}
             render={(companyData) => {
               const company = companyData as Company;
 
