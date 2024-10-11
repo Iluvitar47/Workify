@@ -33,16 +33,22 @@ class UserController {
     };
 
     searchUser = async (req, res, next) => {
+        console.log('searchUser function called');
+        console.log('Query parameters:', req.query);
+
         const users = await UserModel.search(req.query);
+        console.log('Search results:', users);
+
         if (!users.length) {
+            console.log('No users found');
             throw new HttpException(404, 'User not found');
         }
-    
+
         const usersWithoutPassword = users.map(user => {
             const { password, ...userWithoutPassword } = user;
             return userWithoutPassword;
         });
-    
+
         res.send(usersWithoutPassword);
     };
 
@@ -111,9 +117,10 @@ class UserController {
         const secretKey = process.env.SECRET_JWT || "";
         const token = jwt.sign({ user_id: user.id.toString() }, secretKey, { expiresIn: '24h' });
 
-        const { password, ...userWithoutPassword } = user;
+        const { password, permission, location, business_sector, phone, experiences, studies, skills, target_job, ...userWithoutPasswordAndOthers } = user;
 
-        res.send({ ...userWithoutPassword, token });
+        // Uselsess to get all user infos, maybe only the token
+        res.send({ ...userWithoutPasswordAndOthers, token });
     };
 
     checkValidation = (req) => {
