@@ -6,6 +6,7 @@ const errorMiddleware = require('./middlewares/error.middleware');
 const userRouter = require('./routes/user.route');
 const companyRouter = require('./routes/company.route');
 const advertisementRouter = require('./routes/advertisement.route');
+const applicationRouter = require('./routes/application.route');
 
 // Init express
 const app = express();
@@ -29,6 +30,7 @@ const PORT = process.env.PORT || 3000;
 app.use(`/api/v1/users`, userRouter);
 app.use(`/api/v1/companies`, companyRouter);
 app.use(`/api/v1/advertisements`, advertisementRouter);
+app.use(`/api/v1/applications`, applicationRouter);
 
 
 // 404 error
