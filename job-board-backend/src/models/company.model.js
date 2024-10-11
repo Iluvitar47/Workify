@@ -30,7 +30,7 @@ class CompanyModel {
 
     search = async (params) => {
         const { columnSet, values } = multipleColumnSet(params);
-
+        
         const sql = `SELECT * FROM ${this.tableName} WHERE ${columnSet}`;
 
         const result = await query(sql, [...values]);

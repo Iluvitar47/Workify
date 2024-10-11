@@ -20,12 +20,11 @@ class UserModel {
 
     findOne = async (params) => {
         const { columnSet, values } = multipleColumnSet(params)
-
-        let sql = `SELECT * FROM ${this.tableName}
-        WHERE ${columnSet}`;
+        
+        let sql = `SELECT * FROM ${this.tableName} WHERE ${columnSet}`;
 
         const result = await query(sql, [...values]);
-
+        
         return result[0];
     }
 
