@@ -3,22 +3,20 @@
 import { useState, useEffect } from 'react';
 import React from 'react';
 
-
-const ErrorComponent = () => {
+const useFetchData = <T,>(url: string) => {
+  const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:5558/api/v1/users');
-
+      const response = await fetch(url);
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Something went wrong');
       }
-
-      const data = await response.json();
-      console.log('Data received: ', data);
-    } catch (err: unknown) {
+      const responseData = await response.json();
+      setData(responseData);
+    } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
       } else {
@@ -28,18 +26,29 @@ const ErrorComponent = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (url) {
+      fetchData();
+    }
+  }, [url]);
+
+  console.log(data);
+  console.log(error);
+  return { data, error };
+};
+
+const MiddlewareComponent = <T,>({ route, render }: { route: string; render: (data: T) => JSX.Element }) => {
+  const { data, error } = useFetchData<T>(route);
 
   return (
     <div>
       {error && (
-        <div style={{ display: 'block', color: 'red' }}>
+        <div style={{ color: 'red' }}>
           <p>Error: {error}</p>
         </div>
       )}
+      {data && render(data)}
     </div>
   );
 };
 
-export default ErrorComponent;
+export default MiddlewareComponent;

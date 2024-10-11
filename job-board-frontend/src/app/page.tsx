@@ -1,12 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
 import AdvertisementCards from './components/AdvertisementCards';
-import ErrorComponent from './components/errorComponent';
 
 export default function Home() {
   return (
     <>
-    <ErrorComponent/>
     <AdvertisementCards/>
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-poppins">
       <input className="input bg-fullwhite dark:bg-fullblack text-fullblack dark:text-fullwhite flex items-center justify-center text-sm placeholder:italic placeholder:text-foreground" type="text" placeholder='enter text'/>
