@@ -10,7 +10,7 @@ const { createApplicationSchema, updateApplicationSchema } = require('../middlew
 router.get('/', auth(), awaitHandlerFactory(ApplicationControllers.getAllApplications)); // localhost:5558/api/v1/applications
 router.get('/id/:id', auth(Role.Admin), awaitHandlerFactory(ApplicationControllers.getApplicationById)); // localhost:5558/api/v1/applications/:id
 router.post('/', auth(Role.Admin), createApplicationSchema, awaitHandlerFactory(ApplicationControllers.createApplication)); // localhost:5558/api/v1/applications
-router.patch('/:id', auth(), updateApplicationSchema, awaitHandlerFactory(ApplicationControllers.updateApplication)); // localhost:5558/api/v1/applications/:id
+router.patch('/:id', updateApplicationSchema, awaitHandlerFactory(ApplicationControllers.updateApplication)); // localhost:5558/api/v1/applications/:id
 router.delete('/:id', auth(Role.Admin), awaitHandlerFactory(ApplicationControllers.deleteApplication)); // localhost:5558/api/v1/applications/:id
 
 module.exports = router;
