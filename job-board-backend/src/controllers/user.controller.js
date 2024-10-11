@@ -33,14 +33,9 @@ class UserController {
     };
 
     searchUser = async (req, res, next) => {
-        console.log('searchUser function called');
-        console.log('Query parameters:', req.query);
-
         const users = await UserModel.search(req.query);
-        console.log('Search results:', users);
 
         if (!users.length) {
-            console.log('No users found');
             throw new HttpException(404, 'User not found');
         }
 
