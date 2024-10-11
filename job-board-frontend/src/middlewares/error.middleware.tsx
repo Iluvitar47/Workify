@@ -31,8 +31,6 @@ const useFetchData = <T,>(url: string) => {
     }
   }, [url]);
 
-  console.log(data);
-  console.log(error);
   return { data, error };
 };
 
