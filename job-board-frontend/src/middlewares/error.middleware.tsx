@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import React from 'react';
+import { getCookie, setCookie } from '@/utils/cookies.utils';
 
 const useFetchData = <T,>(url: string, method: string, body?: object | undefined) => {
   const [data, setData] = useState<T | null>(null);
@@ -26,6 +27,13 @@ const useFetchData = <T,>(url: string, method: string, body?: object | undefined
       }
       const responseData = await response.json();
       setData(responseData);
+
+      if (url.includes('login')) {
+        const token = await getCookie('token');
+        if (!token) {
+          setCookie('token', responseData.token);
+        }
+      }
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
