@@ -17,7 +17,6 @@ const LoginComponent: React.FC = () => {
   };
 
   const renderLoginForm = () => {
-    console.log(email, password);
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
