@@ -112,7 +112,7 @@ class UserController {
         const secretKey = process.env.SECRET_JWT || "";
         const token = jwt.sign({ user_id: user.id.toString() }, secretKey, { expiresIn: '24h' });
 
-        const { password, permission, location, business_sector, phone, experiences, studies, skills, target_job, ...userWithoutPasswordAndOthers } = user;
+        const { password, location, business_sector, phone, experiences, studies, skills, target_job, ...userWithoutPasswordAndOthers } = user;
 
         // Uselsess to get all user infos, maybe only the token
         res.send({ ...userWithoutPasswordAndOthers, token });
