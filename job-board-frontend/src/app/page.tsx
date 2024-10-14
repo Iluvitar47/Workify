@@ -1,12 +1,10 @@
 import React from 'react';
-import AdvertisementCards from './components/AdvertisementCards';
-import LoginComponent from './components/LoginComponent';
+import Home from './pages/Home';
 
-export default function Home() {
+export default function Page() {
   return (
     <>
-    <AdvertisementCards/>
-    <LoginComponent/>
+    <Home/>
     </>
   );
 }
