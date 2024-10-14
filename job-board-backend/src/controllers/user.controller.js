@@ -108,14 +108,18 @@ class UserController {
             throw new HttpException(401, 'Incorrect password!');
         }
 
-        // Create a token
-        const secretKey = process.env.SECRET_JWT || "";
-        const token = jwt.sign({ user_id: user.id.toString() }, secretKey, { expiresIn: '24h' });
-
+        
         const { password, location, business_sector, phone, experiences, studies, skills, target_job, ...userWithoutPasswordAndOthers } = user;
 
+        // Create a token
+        const secretKey = process.env.SECRET_JWT || "";
+        const token = jwt.sign({ user:userWithoutPasswordAndOthers }, secretKey, { expiresIn: '24h' });
+        
         // Uselsess to get all user infos, maybe only the token
-        res.send({ ...userWithoutPasswordAndOthers, token });
+        res.cookie('userJWT', token, { secure:process.env.NODE_ENV === 'production', maxAge: 24 * 60 * 60 * 1000}); // cookie plus propre dans le backend
+        // res.send({ ...userWithoutPasswordAndOthers, token });
+        res.status(200) // OK
+
     };
 
     checkValidation = (req) => {
