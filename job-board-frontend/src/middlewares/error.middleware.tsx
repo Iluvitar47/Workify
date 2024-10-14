@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react';
 import React from 'react';
 import { getCookie, setCookie } from '@/utils/cookies.utils';
-// import { auth } from './auth.middleware';
-// import type { Token } from '@/models/token.model'
+import { User } from '@/models/user.model';
 
 const useFetchData = <T,>(url: string, method: string, body?: object | undefined) => {
   const [data, setData] = useState<T | null>(null);
@@ -33,10 +32,7 @@ const useFetchData = <T,>(url: string, method: string, body?: object | undefined
       if (url.includes('login')) {
         const token = await getCookie('token');
         if (!token) {
-          setCookie('token', responseData.token, responseData.permission);
-          const token = await getCookie('token');
-          console.log('error middleware if not login yet', token);
-          // await auth();
+          setCookie('token', responseData.token);
         }
       }
     } catch (err) {
@@ -57,7 +53,7 @@ const useFetchData = <T,>(url: string, method: string, body?: object | undefined
   return { data, error };
 };
 
-const MiddlewareCheckError = <T,>({ route, method, body, render }: { route: string; method: string, body: object | undefined; render: (data: T) => JSX.Element }) => {
+const MiddlewareCheckError = <T,>({ route, method, body, render }: { route: string; method: string, body: object | undefined; render: (data: T) => JSX.Element | User }) => {
   const { data, error } = useFetchData<T>(route, method, body);
 
   return (

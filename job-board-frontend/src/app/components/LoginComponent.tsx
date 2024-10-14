@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import MiddlewareCheckError from '../../middlewares/error.middleware';
+import Home from '../pages/Home';
 
 const LoginComponent: React.FC = () => {
   const urlApi = process.env.NEXT_PUBLIC_URL_API;
@@ -56,7 +57,7 @@ const LoginComponent: React.FC = () => {
       route={loginRoute}
       method="POST"
       body={{ email, password }}
-      render={() => <div className="text-center mt-4">Login successful</div>}
+      render={() => <Home/>}
     />
   ) : (
     renderLoginForm()
