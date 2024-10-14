@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import React from 'react';
 import { getCookie, setCookie } from '@/utils/cookies.utils';
+// import { auth } from './auth.middleware';
+// import type { Token } from '@/models/token.model'
 
 const useFetchData = <T,>(url: string, method: string, body?: object | undefined) => {
   const [data, setData] = useState<T | null>(null);
@@ -31,7 +33,10 @@ const useFetchData = <T,>(url: string, method: string, body?: object | undefined
       if (url.includes('login')) {
         const token = await getCookie('token');
         if (!token) {
-          setCookie('token', responseData.token);
+          setCookie('token', responseData.token, responseData.permission);
+          const token = await getCookie('token');
+          console.log('error middleware if not login yet', token);
+          // await auth();
         }
       }
     } catch (err) {

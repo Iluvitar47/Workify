@@ -6,9 +6,8 @@ import MiddlewareCheckError from '../../middlewares/error.middleware';
 const LoginComponent: React.FC = () => {
   const urlApi = process.env.NEXT_PUBLIC_URL_API;
   const loginRoute = `${urlApi}/users/login`;
-  console.log(loginRoute);
-  const [email, setEmail] = useState<string>('admin@admin.fr');
-  const [password, setPassword] = useState<string>('superadmin');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const handleSubmit = (e: React.FormEvent) => {
