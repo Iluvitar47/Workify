@@ -9,48 +9,59 @@ const LoginComponent: React.FC = () => {
   console.log(loginRoute);
   const [email, setEmail] = useState<string>('admin@admin.fr');
   const [password, setPassword] = useState<string>('superadmin');
+  const [submitted, setSubmitted] = useState<boolean>(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitted(true);
   };
 
   const renderLoginForm = () => {
+    console.log(email, password);
     return (
-      <div>
-        <form onSubmit={handleSubmit}>
-          <label>
-            Email:
+      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
+          <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+          <div className="mb-4">
+            <label className="block text-gray-700">Email:</label>
             <input
               type="text"
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </label>
-          <br />
-          <label>
-            Password:
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Password:</label>
             <input
               type="password"
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </label>
-          <br />
-          <button type="submit">Submit</button>
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+          >
+            Submit
+          </button>
         </form>
       </div>
     );
   };
 
-  return (
+  return submitted ? (
     <MiddlewareCheckError
       route={loginRoute}
-      method='POST'
+      method="POST"
       body={{ email, password }}
-      render={() => renderLoginForm()}
+      render={() => <div className="text-center mt-4">Login successful</div>}
     />
+  ) : (
+    renderLoginForm()
   );
 };
 
