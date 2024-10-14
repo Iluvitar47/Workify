@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import type { Company } from '../../models/companies.model';
-import type { Advertisement } from '../../models/advertisements.model';
-import MiddlewareCheckError from '../../middlewares/error.middleware';
+import type { Company } from '../models/companies.model';
+import type { Advertisement } from '../models/advertisements.model';
+import MiddlewareCheckError from '../middlewares/error.middleware';
 
 
 const AdvertisementCards: React.FC = () => {

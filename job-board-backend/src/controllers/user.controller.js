@@ -116,9 +116,8 @@ class UserController {
         const token = jwt.sign({ user:userWithoutPasswordAndOthers }, secretKey, { expiresIn: '24h' });
         
         // Uselsess to get all user infos, maybe only the token
-        res.cookie('userJWT', token, { secure:process.env.NODE_ENV === 'production', maxAge: 24 * 60 * 60 * 1000}); // cookie plus propre dans le backend
         // res.send({ ...userWithoutPasswordAndOthers, token });
-        res.status(200) // OK
+        res.status(200).send({user:userWithoutPasswordAndOthers, token}) 
 
     };
 
