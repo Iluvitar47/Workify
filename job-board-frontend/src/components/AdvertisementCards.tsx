@@ -35,7 +35,7 @@ const AdvertisementCards: React.FC = () => {
     };
 
     fetchAdvertisements();
-  }, [urlApi]);
+  }, [urlApi]); 
 
   const toggleExpand = (id: number) => {
     setExpandedIds((prevExpandedIds) =>
