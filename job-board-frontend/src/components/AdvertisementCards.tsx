@@ -5,17 +5,16 @@ import type { Company } from '../models/companies.model';
 import type { Advertisement } from '../models/advertisements.model';
 import MiddlewareCheckError from '../middlewares/error.middleware';
 
-
 const AdvertisementCards: React.FC = () => {
   const [expandedIds, setExpandedIds] = useState<number[]>([]);
   const urlApi = process.env.NEXT_PUBLIC_URL_API;
   const advertisementsRoute = `${urlApi}/advertisements`;
 
-  const toggleExpand = (id: number) => { 
+  const toggleExpand = (id: number) => {
     setExpandedIds((prevExpandedIds) =>
       prevExpandedIds.includes(id)
         ? prevExpandedIds.filter((expandedId) => expandedId !== id)
-        : [...prevExpandedIds, id]
+        : [...prevExpandedIds, id],
     );
   };
 
@@ -26,7 +25,7 @@ const AdvertisementCards: React.FC = () => {
           <MiddlewareCheckError
             key={ad.id}
             route={`${urlApi}/companies/id/${ad.company_id}`}
-            method='GET'
+            method="GET"
             body={undefined}
             render={(companyData) => {
               const company = companyData as Company;
@@ -34,9 +33,7 @@ const AdvertisementCards: React.FC = () => {
               return (
                 <div className="add-card pb-5 my-5 mx-6 sm:mx-12 p-2 sm:p-4">
                   <h1 className="text-2xl font-bold">{ad.title}</h1>
-                  {company && (
-                    <h2 className="mt-2 text-xl text-info">{company.name}</h2>
-                  )}
+                  {company && <h2 className="mt-2 text-xl text-info">{company.name}</h2>}
                   <p className="mt-2 text-base">
                     <strong>Lieu :</strong> {ad.location}
                   </p>
@@ -78,7 +75,7 @@ const AdvertisementCards: React.FC = () => {
   return (
     <MiddlewareCheckError
       route={advertisementsRoute}
-      method='GET'
+      method="GET"
       body={undefined}
       render={(advertisements) => {
         const ads = advertisements as Advertisement[];

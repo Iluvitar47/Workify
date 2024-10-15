@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
 import { root } from 'postcss';
 import React, { useState } from 'react';
 
@@ -38,7 +38,6 @@ const LoginComponent: React.FC = () => {
   };
 
   const renderLoginForm = () => {
-
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
@@ -75,8 +74,6 @@ const LoginComponent: React.FC = () => {
     );
   };
 
-  return (
-    renderLoginForm()
-  )
-}
+  return renderLoginForm();
+};
 export default LoginComponent;

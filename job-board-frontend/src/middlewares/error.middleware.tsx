@@ -53,7 +53,17 @@ const useFetchData = <T,>(url: string, method: string, body?: object | undefined
   return { data, error };
 };
 
-const MiddlewareCheckError = <T,>({ route, method, body, render }: { route: string; method: string, body: object | undefined; render: (data: T) => JSX.Element | User }) => {
+const MiddlewareCheckError = <T,>({
+  route,
+  method,
+  body,
+  render,
+}: {
+  route: string;
+  method: string;
+  body: object | undefined;
+  render: (data: T) => JSX.Element | User;
+}) => {
   const { data, error } = useFetchData<T>(route, method, body);
 
   return (
