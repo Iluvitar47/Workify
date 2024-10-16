@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import UsersDashboard from '../../components/UsersDashboard';
 import AdvertisementDashboard from '../../components/AdvertisementsDashboard';
