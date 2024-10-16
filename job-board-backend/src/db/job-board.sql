@@ -23,7 +23,7 @@ CREATE TABLE `users`(
     `permission` ENUM('applicants', 'admin') DEFAULT 'applicants',
     `password` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL UNIQUE,
-    `people_id` INT NOT NULL,
+    `people_id` INT,
     PRIMARY KEY (`id`),
     CONSTRAINT `user_people_id_foreign` FOREIGN KEY(`people_id`) REFERENCES `people`(`id`) ON DELETE CASCADE
 );

@@ -10,7 +10,7 @@ class UserController {
     getAllUsers = async (req, res, next) => {
         let userList = await UserModel.find();
         if (!userList.length) {
-            throw new HttpException(404, 'Users not found');
+            throw new HttpException(404, 'User not found');
         }
 
         userList = userList.map(user => {
@@ -33,18 +33,17 @@ class UserController {
     };
 
     searchUser = async (req, res, next) => {
-        const users = await UserModel.search(req.query);
-
-        if (!users.length) {
+        let userList = await UserModel.find();
+        if (!userList.length) {
             throw new HttpException(404, 'User not found');
         }
 
-        const usersWithoutPassword = users.map(user => {
+        userList = userList.map(user => {
             const { password, ...userWithoutPassword } = user;
             return userWithoutPassword;
         });
 
-        res.send(usersWithoutPassword);
+        res.send(userList);
     };
 
     getCurrentUser = async (req, res, next) => {
@@ -108,16 +107,13 @@ class UserController {
             throw new HttpException(401, 'Incorrect password!');
         }
 
-        
-        const { password, location, business_sector, phone, experiences, studies, skills, target_job, ...userWithoutPasswordAndOthers } = user;
+        const { password, ...userWithoutPasswordAndOthers } = user;
 
         // Create a token
         const secretKey = process.env.SECRET_JWT || "";
         const token = jwt.sign({ user_id: user.id.toString() }, secretKey, { expiresIn: '24h' });
         
-        // Uselsess to get all user infos, maybe only the token
-        // res.send({ ...userWithoutPasswordAndOthers, token });
-        res.status(200).send({ user:userWithoutPasswordAndOthers, token }) 
+        res.status(200).send({ user:userWithoutPasswordAndOthers, token })
 
     };
 
