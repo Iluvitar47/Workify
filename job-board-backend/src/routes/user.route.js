@@ -12,7 +12,7 @@ router.get('/id/:id', auth(Role.Admin), awaitHandlerFactory(userController.getUs
 router.get('/search', auth(Role.Admin), awaitHandlerFactory(userController.searchUser)); // localhost:5558/api/v1/users/search
 router.get('/current', auth(), awaitHandlerFactory(userController.getCurrentUser)); // localhost:5558/api/v1/users/current
 router.post('/', createUserSchema, awaitHandlerFactory(userController.createUser)); // localhost:5558/api/v1/users
-router.patch('/:id', auth(Role.Admin), updateUserSchema, awaitHandlerFactory(userController.updateUser)); // localhost:5558/api/v1/users/:id
+router.patch('/:id', updateUserSchema, awaitHandlerFactory(userController.updateUser)); // localhost:5558/api/v1/users/:id
 router.delete('/:id', auth(Role.Admin), awaitHandlerFactory(userController.deleteUser)); // localhost:5558/api/v1/users/:id
 
 router.post('/login', validateLogin, awaitHandlerFactory(userController.userLogin)); // localhost:5558/api/v1/users/login
