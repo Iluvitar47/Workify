@@ -12,7 +12,7 @@ const config: Config = {
       fullblack: '#000000',
       ligth: '#F8F4E3',
       dark: '#060B0F',
-      interact : '#F5C800',
+      interact: '#F5C800',
       info: '#E71D36',
     },
     fontFamily: {

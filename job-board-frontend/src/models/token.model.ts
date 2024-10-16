@@ -1,7 +1,7 @@
 interface Token {
-    name: string;
-    value: string;
-    path: string;
+  name: string;
+  value: string;
+  path: string;
 }
 
 export type { Token };

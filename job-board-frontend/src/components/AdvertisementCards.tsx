@@ -41,7 +41,7 @@ const AdvertisementCards: React.FC = () => {
     setExpandedIds((prevExpandedIds) =>
       prevExpandedIds.includes(id)
         ? prevExpandedIds.filter((expandedId) => expandedId !== id)
-        : [...prevExpandedIds, id]
+        : [...prevExpandedIds, id],
     );
   };
 

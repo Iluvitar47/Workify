@@ -80,7 +80,7 @@ class UserController {
             throw new HttpException(404, 'Something went wrong');
         }
 
-        res.status(204).send('User has been updated');
+        res.status(202).send('User has been updated');
     };
 
     deleteUser = async (req, res, next) => {
@@ -88,7 +88,7 @@ class UserController {
         if (!result) {
             throw new HttpException(404, 'User not found');
         }
-        res.status(204).send('User has been deleted');
+        res.status(202).send('User has been deleted');
     };
 
     userLogin = async (req, res, next) => {
@@ -113,11 +113,11 @@ class UserController {
 
         // Create a token
         const secretKey = process.env.SECRET_JWT || "";
-        const token = jwt.sign({ user:userWithoutPasswordAndOthers }, secretKey, { expiresIn: '24h' });
+        const token = jwt.sign({ user_id: user.id.toString() }, secretKey, { expiresIn: '24h' });
         
         // Uselsess to get all user infos, maybe only the token
         // res.send({ ...userWithoutPasswordAndOthers, token });
-        res.status(200).send({user:userWithoutPasswordAndOthers, token}) 
+        res.status(200).send({ user:userWithoutPasswordAndOthers, token }) 
 
     };
 

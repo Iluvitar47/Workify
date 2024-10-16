@@ -14,4 +14,4 @@ interface User {
     password : string
 }
 
-export type { User }
+export type { User };

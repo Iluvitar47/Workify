@@ -3,18 +3,18 @@
 @tailwind utilities;
 
 :root {
-  --background: #F8F4E3;
-  --foreground: #060B0F;
+  --background: #f8f4e3;
+  --foreground: #060b0f;
   --shadow: 18px 21px 40px 0px rgba(245, 200, 0, 0.15);
-  --input: 0px 2px 4px 0px rgba(0, 0, 0, 0.15), 2px 2px 20px 0px rgba(245, 200, 0, 0.10) inset;
+  --input: 0px 2px 4px 0px rgba(0, 0, 0, 0.15), 2px 2px 20px 0px rgba(245, 200, 0, 0.1) inset;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #060B0F;
-    --foreground: #F8F4E3;
-    --shadow: 18px 21px 40px 0px rgba(245, 200, 0, 0.30);
-    --input: 0px 2px 4px 0px rgba(245, 200, 0, 0.30), 2px 2px 20px 0px rgba(255, 255, 255, 0.103) inset;
+    --background: #060b0f;
+    --foreground: #f8f4e3;
+    --shadow: 18px 21px 40px 0px rgba(245, 200, 0, 0.3);
+    --input: 0px 2px 4px 0px rgba(245, 200, 0, 0.3), 2px 2px 20px 0px rgba(255, 255, 255, 0.103) inset;
   }
 }
 
@@ -33,7 +33,7 @@ body {
 .add-card {
   background: var(--background);
   border-radius: 10px;
-  border-left: 5px solid #FFD700;
+  border-left: 5px solid #ffd700;
   box-shadow: var(--shadow);
 }
 
@@ -41,13 +41,13 @@ body {
 .button {
   background: var(--background);
   border-radius: 8px;
-  border: 1px solid #F5C800;
+  border: 1px solid #f5c800;
   /* className="button transition-colors hover:underline hover:text-info hover:bg-interact text-fullblack dark:text-fullwhite flex items-center justify-center text-sm" */
 }
 
 .input {
   border-radius: 5px;
-  border-left: 2px solid #F5C800;
+  border-left: 2px solid #f5c800;
   box-shadow: var(--input);
   padding: 0.3rem;
   /* className="input bg-fullwhite dark:bg-fullblack text-fullblack dark:text-fullwhite flex items-center justify-center text-sm placeholder:italic placeholder:text-foreground" */
@@ -69,4 +69,41 @@ h3 {
 
 p {
   font-weight: 300;
+}
+
+/* Warning!!! don't use it for prod */
+/* convert to tailwind */
+.modal-wrapper {
+  width: 500px;
+  height: 600px;
+}
+
+.modal {
+  background: white;
+  height:100%;
+  width:100%;
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-body {
+  padding-top: 10px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 25px;
 }

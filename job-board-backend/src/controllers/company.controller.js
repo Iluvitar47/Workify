@@ -54,7 +54,7 @@ class CompanyController {
             throw new HttpException(404, 'Something went wrong');
         }
 
-        res.status(204).send('Company has been updated!');
+        res.status(202).send('Company has been updated!');
     }
 
     deleteCompany = async (req, res, next) => {
@@ -62,7 +62,7 @@ class CompanyController {
         if (!result) {
             throw new HttpException(404, 'Company not found');
         }
-        res.status(204).send();
+        res.status(202).send('Company has been deleted!');
     }
 
     checkValidation = (req) => {

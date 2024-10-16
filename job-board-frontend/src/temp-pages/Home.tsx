@@ -7,68 +7,71 @@ import MiddlewareCheckError from '@/middlewares/error.middleware';
 import type { User } from '@/models/user.model';
 
 export function getCurrentPermission() {
-    const urlApi = process.env.NEXT_PUBLIC_API_URL;
-    const getCurrentRoute = `${urlApi}/users/current`;
-    // const token = getCookie('token');
+  const urlApi = process.env.NEXT_PUBLIC_API_URL;
+  const getCurrentRoute = `${urlApi}/users/current`;
+  // const token = getCookie('token');
 
-    // return (
-    //     <MiddlewareCheckError
-    //         route={getCurrentRoute}
-    //         method='GET'
-    //         body={undefined}
-    //         render={(currentUser: User) => {
-    //             const userPermission = currentUser as User;
-    //             return userPermission.permission;
-    //         }}
-    //     />
-    // );
+  // return (
+  //     <MiddlewareCheckError
+  //         route={getCurrentRoute}
+  //         method='GET'
+  //         body={undefined}
+  //         render={(currentUser: User) => {
+  //             const userPermission = currentUser as User;
+  //             return userPermission.permission;
+  //         }}
+  //     />
+  // );
 
-    return (
-        <MiddlewareCheckError
-          route={getCurrentRoute}
-          method="GET"
-          body={undefined}
-          render={(currentUser) => { const userPermission = currentUser as User; return userPermission.permission; }}
-        />
-    )
+  return (
+    <MiddlewareCheckError
+      route={getCurrentRoute}
+      method="GET"
+      body={undefined}
+      render={(currentUser) => {
+        const userPermission = currentUser as User;
+        return userPermission.permission;
+      }}
+    />
+  );
 }
 
 export function getPermission(permission: string): boolean {
-    if (permission === 'admin') {
-        return true;
-    }
-    return false;
+  if (permission === 'admin') {
+    return true;
+  }
+  return false;
 }
 
 export function AdminPage() {
-    const [isAdmin, setisAdmin] = useState(false);
-    const [loading, setLoading] = useState(true);
+  const [isAdmin, setisAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const checkAdmin = async () => {
-            const permission = await getCurrentPermission();
-          const authenticated = await adminPermission(permission);
-          setisAdmin(authenticated);
-          setLoading(false);
-        };
-    
-        checkAdmin();
-    }, []);
+  useEffect(() => {
+    const checkAdmin = async () => {
+      const permission = await getCurrentPermission();
+      const authenticated = await adminPermission(permission);
+      setisAdmin(authenticated);
+      setLoading(false);
+    };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    checkAdmin();
+  }, []);
 
-    if (!isAdmin) {
-        return <Offers/>;
-    }
-    return <Dashboard/>;
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAdmin) {
+    return <Offers />;
+  }
+  return <Dashboard />;
 }
 
 export default function Home() {
   return (
     <>
-        <AdminPage/>
+      <AdminPage />
     </>
   );
 }
