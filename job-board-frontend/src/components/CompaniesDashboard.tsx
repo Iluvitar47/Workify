@@ -1,12 +1,12 @@
 'use client';
 
-import { User } from '@/models/user.model';
+import { Company } from '../models/companies.model';
 import React, { useState, useEffect } from 'react';
 
-const UsersComponents: React.FC = () => {
+const CompaniesDashboard: React.FC = () => {
   const urlApi = process.env.NEXT_PUBLIC_URL_API;
-  const usersRoute = `${urlApi}/users`;
-  const [users, setUsers] = useState<User[]>([]);
+  const companiesRoute = `${urlApi}/companies`;
+  const [companies, setCompanies] = useState<Company[]>([]);
   const [error, setError] = useState<string | null>(null);
   const bearer = 'Bearer ';
 
@@ -16,7 +16,8 @@ const UsersComponents: React.FC = () => {
       if (!token) {
         setError('Invalid credentials');
       }
-      await fetch(usersRoute, {
+
+      await fetch(companiesRoute, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -30,7 +31,7 @@ const UsersComponents: React.FC = () => {
           return res.json();
         })
         .then((data) => {
-          setUsers(data);
+          setCompanies(data);
         })
         .catch((err) => {
           setError(err.message);
@@ -43,29 +44,32 @@ const UsersComponents: React.FC = () => {
   const renderUsersTable = () => {
     return (
       <div className="flex justify-center items-center flex-col min-h-screen bg-gray-100">
-        <h2 className="text-2xl font-bold mb-6 text-center">Users</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Companies</h2>
         <div className="mb-4">
           <table className="table-auto">
             <thead>
               <tr>
                 <th className="px-4 py-2">Id</th>
-                <th className="px-4 py-2">Permission</th>
+                <th className="px-4 py-2">Name</th>
                 <th className="px-4 py-2">Email</th>
-                <th className="px-4 py-2">Firstname</th>
-                <th className="px-4 py-2">Lastname</th>
                 <th className="px-4 py-2">Phone</th>
-                <th className="px-4 py-2">Actions</th>
+                <th className="px-4 py-2">Business Sector</th>
+                <th className="px-4 py-2">Location</th>
+                <th className="px-4 py-2">Employees</th>
+                <th className="px-4 py-2">Description</th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => (
+              {companies.map((company, index) => (
                 <tr key={index}>
-                  <td className="border px-4 py-2">{user.id}</td>
-                  <td className="border px-4 py-2">{user.permission}</td>
-                  <td className="border px-4 py-2">{user.email}</td>
-                  <td className="border px-4 py-2">{user.firstname}</td>
-                  <td className="border px-4 py-2">{user.lastname}</td>
-                  <td className="border px-4 py-2">{user.phone}</td>
+                  <td className="border px-4 py-2">{company.id}</td>
+                  <td className="border px-4 py-2">{company.name}</td>
+                  <td className="border px-4 py-2">{company.email}</td>
+                  <td className="border px-4 py-2">{company.phone}</td>
+                  <td className="border px-4 py-2">{company.business_sector}</td>
+                  <td className="border px-4 py-2">{company.location}</td>
+                  <td className="border px-4 py-2">{company.employees}</td>
+                  <td className="border px-4 py-2">{company.description}</td>
                   <button className="btn">modifier</button>
                   <button className="btn">supprimer</button>
                 </tr>
@@ -85,4 +89,4 @@ const UsersComponents: React.FC = () => {
   );
 };
 
-export default UsersComponents;
+export default CompaniesDashboard;

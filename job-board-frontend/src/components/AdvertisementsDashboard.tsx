@@ -1,22 +1,19 @@
 'use client';
 
-import { User } from '@/models/user.model';
+import { Advertisement } from '@/models/advertisements.model';
 import React, { useState, useEffect } from 'react';
 
-const UsersComponents: React.FC = () => {
+const AdvertisementsComponents: React.FC = () => {
   const urlApi = process.env.NEXT_PUBLIC_URL_API;
-  const usersRoute = `${urlApi}/users`;
-  const [users, setUsers] = useState<User[]>([]);
+  const advertisementsRoute = `${urlApi}/advertisements`;
+  const [advertisements, setAdvertisements] = useState<Advertisement[]>([]);
   const [error, setError] = useState<string | null>(null);
   const bearer = 'Bearer ';
 
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem('token');
-      if (!token) {
-        setError('Invalid credentials');
-      }
-      await fetch(usersRoute, {
+      await fetch(advertisementsRoute, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -30,7 +27,7 @@ const UsersComponents: React.FC = () => {
           return res.json();
         })
         .then((data) => {
-          setUsers(data);
+          setAdvertisements(data);
         })
         .catch((err) => {
           setError(err.message);
@@ -43,29 +40,31 @@ const UsersComponents: React.FC = () => {
   const renderUsersTable = () => {
     return (
       <div className="flex justify-center items-center flex-col min-h-screen bg-gray-100">
-        <h2 className="text-2xl font-bold mb-6 text-center">Users</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Advertisements</h2>
         <div className="mb-4">
           <table className="table-auto">
             <thead>
               <tr>
                 <th className="px-4 py-2">Id</th>
-                <th className="px-4 py-2">Permission</th>
-                <th className="px-4 py-2">Email</th>
-                <th className="px-4 py-2">Firstname</th>
-                <th className="px-4 py-2">Lastname</th>
-                <th className="px-4 py-2">Phone</th>
+                <th className="px-4 py-2">Title</th>
+                <th className="px-4 py-2">Wages</th>
+                <th className="px-4 py-2">Location</th>
+                <th className="px-4 py-2">Working times</th>
+                <th className="px-4 py-2">Company</th>
+                <th className="px-4 py-2">Created at</th>
                 <th className="px-4 py-2">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => (
+              {advertisements.map((advertisement, index) => (
                 <tr key={index}>
-                  <td className="border px-4 py-2">{user.id}</td>
-                  <td className="border px-4 py-2">{user.permission}</td>
-                  <td className="border px-4 py-2">{user.email}</td>
-                  <td className="border px-4 py-2">{user.firstname}</td>
-                  <td className="border px-4 py-2">{user.lastname}</td>
-                  <td className="border px-4 py-2">{user.phone}</td>
+                  <td className="border px-4 py-2">{advertisement.id}</td>
+                  <td className="border px-4 py-2">{advertisement.title}</td>
+                  <td className="border px-4 py-2">{advertisement.wages}</td>
+                  <td className="border px-4 py-2">{advertisement.location}</td>
+                  <td className="border px-4 py-2">{advertisement.working_times}</td>
+                  <td className="border px-4 py-2">{advertisement.company_id}</td>
+                  <td className="border px-4 py-2">{advertisement.created_at}</td>
                   <button className="btn">modifier</button>
                   <button className="btn">supprimer</button>
                 </tr>
@@ -85,4 +84,4 @@ const UsersComponents: React.FC = () => {
   );
 };
 
-export default UsersComponents;
+export default AdvertisementsComponents;
