@@ -27,9 +27,6 @@ const Header: React.FC = () => {
           {permission === "admin" ? (
             <>
               <button>
-                <a href="/dashboard">Dashboard</a>
-              </button>
-              <button>
                 <a href="/offers">Offers</a>
               </button>
             </>
