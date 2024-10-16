@@ -54,13 +54,20 @@ const EditProfileComponent: React.FC = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
+      const currentUser = localStorage.getItem('user');
+      const currentUserID = currentUser ? JSON.parse(currentUser).id : null;
+
       if (!token) {
         throw new Error('No authentication token found.');
       }
       if (!user) {
         throw new Error('User not found');
       }
-  
+
+      if (currentUserID !== user.id) {
+        throw new Error("Unauthorized action. You cannot modify another user's data.");
+      }
+
       const requestBody = {
         firstname: formData.firstname,
         lastname: formData.lastname,
@@ -73,7 +80,7 @@ const EditProfileComponent: React.FC = () => {
         location: formData.location,
         target_job: formData.target_job,
       };
-  
+
       const response = await fetch(`${updateRoute}/${user.id}`, {
         method: 'PATCH',
         headers: {
@@ -82,16 +89,14 @@ const EditProfileComponent: React.FC = () => {
         },
         body: JSON.stringify(requestBody),
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to update user data');
       }
-  
+
       if (response.status === 202) {
-        // Assuming no content or just a success message, handle success directly
         setSuccessMessage('Profile updated successfully!');
       } else {
-        // If a JSON response is expected
         const updatedUser = await response.json();
         setUser(updatedUser);
         setSuccessMessage('Profile updated successfully!');
@@ -100,7 +105,7 @@ const EditProfileComponent: React.FC = () => {
       setError((err as Error).message);
     }
   };
-  
+
 
   const renderEditProfile = () => {
     if (error) {
@@ -126,15 +131,18 @@ const EditProfileComponent: React.FC = () => {
               className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <input
-            type="text"
-            name="lastname"
-            value={formData.lastname || ''}
-            onChange={handleChange}
-            pattern="^[A-Za-z]+$"
-            title="Last name must be only alphabetic"
-            className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+          <div className='mb-4'>
+            <label className="block text-gray-700">Last Name:</label>
+            <input
+              type="text"
+              name="lastname"
+              value={formData.lastname || ''}
+              onChange={handleChange}
+              pattern="^[A-Za-z]+$"
+              title="Last name must be only alphabetic"
+              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
           <div className="mb-4">
             <label className="block text-gray-700">Email:</label>
             <input
@@ -145,15 +153,19 @@ const EditProfileComponent: React.FC = () => {
               className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <input
-            type="text"
-            name="phone"
-            value={formData.phone || ''}
-            onChange={handleChange}
-            pattern="^\+?\d{10,15}$"
-            title="Phone number must be valid (e.g., +1234567890)"
-            className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+          <div className='mb-4'>
+
+            <label className="block text-gray-700">Phone:</label>
+            <input
+              type="text"
+              name="phone"
+              value={formData.phone || ''}
+              onChange={handleChange}
+              pattern="^\+?\d{10,15}$"
+              title="Phone number must be valid (e.g., +1234567890)"
+              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
           <div className="mb-4">
             <label className="block text-gray-700">Experiences:</label>
             <textarea
