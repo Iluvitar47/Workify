@@ -30,7 +30,19 @@ const LoginComponent: React.FC = () => {
       .then((data) => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
-        router.push('/');
+
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+        if (token && user) {
+          const permission = JSON.parse(user).permission;
+          if (permission === 'admin') {
+            router.push('/dashboard');
+          } else {
+            router.push('/offers');
+          }
+        }
+
+        // router.push('/');
       })
       .catch((err) => {
         setError(err.message);
