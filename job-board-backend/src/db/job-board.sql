@@ -5,10 +5,9 @@ USE `job-board`;
 
 CREATE TABLE `people`(
     `id` INT NOT NULL AUTO_INCREMENT,
-    `permission` ENUM('applicants', 'admin') DEFAULT 'applicants',
     `firstname` VARCHAR(60) NOT NULL,
     `lastname` VARCHAR(60) NOT NULL,
-    `email` VARCHAR(255) NOT NULL UNIQUE,
+    `email` VARCHAR(255) NOT NULL,
     `phone` VARCHAR(25) NOT NULL,
     `experiences` VARCHAR(255) NOT NULL,
     `studies` VARCHAR(255) NOT NULL,
@@ -16,8 +15,17 @@ CREATE TABLE `people`(
     `business_sector` VARCHAR(255) NOT NULL,
     `target_job` VARCHAR(255) NOT NULL,
     `location` VARCHAR(255) NOT NULL,
-    `password` VARCHAR(255) NOT NULL,
     PRIMARY KEY(`id`)
+);
+
+CREATE TABLE `users`(
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `permission` ENUM('applicants', 'admin') DEFAULT 'applicants',
+    `password` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL UNIQUE,
+    `people_id` INT,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `user_people_id_foreign` FOREIGN KEY(`people_id`) REFERENCES `people`(`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `companies`(
