@@ -46,7 +46,7 @@ class Application {
             throw new HttpException(404, 'Something went wrong');
         }
         
-        res.send('Application has been updated!');
+        res.status(202).send('Application has been updated!');
     }
 
     deleteApplication = async (req, res, next) => {
@@ -54,7 +54,7 @@ class Application {
         if (!result) {
             throw new HttpException(404, 'Application not found');
         }
-        res.send('Application has been deleted');
+        res.status(202).send('Application has been deleted');
     }
 
     checkValidation = (req) => {

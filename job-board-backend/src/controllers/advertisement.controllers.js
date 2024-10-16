@@ -54,7 +54,7 @@ class AdvertisementController {
             throw new HttpException(404, 'Something went wrong');
         }
         
-        res.send('Advertisement has been updated!');
+        res.status(202).send('Advertisement has been updated!');
     }
 
     deleteAdvertisement = async (req, res, next) => {
@@ -62,7 +62,7 @@ class AdvertisementController {
         if (!result) {
             throw new HttpException(404, 'Advertisement not found');
         }
-        res.send('Advertisement has been deleted!');
+        res.status(202).send('Advertisement has been deleted!');
     }
 
     checkValidation = (req) => {
