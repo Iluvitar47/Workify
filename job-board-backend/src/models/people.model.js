@@ -36,11 +36,20 @@ class PeopleModel {
         return result;
     }
 
-    create = async ({ firstname, lastname, phone, experiences, studies, skills, business_sector, target_job, location }) => {
-        const sql = `INSERT INTO ${this.tableName}
-        (firstname, lastname, phone, experiences, studies, skills, business_sector, target_job, location) VALUES (?,?,?,?,?,?,?,?,?)`;
+    searchAfterCreated = async ({ firstname, lastname, phone }) => {
+        const sql = `SELECT * FROM ${this.tableName}
+        WHERE firstname = ? AND lastname = ? AND phone = ?`;
+    
+        const result = await query(sql, [firstname, lastname, phone]);  
+        
+        return result;
+    }
 
-        const result = await query(sql, [firstname, lastname, phone, experiences, studies, skills, business_sector, target_job, location]);  
+    create = async ({ firstname, lastname, phone, email, experiences, studies, skills, business_sector, target_job, location }) => {
+        const sql = `INSERT INTO ${this.tableName}
+        (firstname, lastname, phone, email, experiences, studies, skills, business_sector, target_job, location) VALUES (?,?,?,?,?,?,?,?,?,?)`;
+
+        const result = await query(sql, [firstname, lastname, phone, email, experiences, studies, skills, business_sector, target_job, location]);  
         const affectedRows = result ? result.affectedRows : 0;
 
         return affectedRows;

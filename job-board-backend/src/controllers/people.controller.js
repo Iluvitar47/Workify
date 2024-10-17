@@ -35,14 +35,20 @@ class PeopleController {
 
     createPeople = async (req, res, next) => {
         this.checkValidation(req);
-
+        
         const result = await PeopleModel.create(req.body);
-
+    
         if (!result) {
             throw new HttpException(500, 'Something went wrong');
         }
-
-        res.status(201).send('People has been created!');
+    
+        const searchResult = await PeopleModel.searchAfterCreated({ firstname: req.body.firstname, lastname: req.body.lastname, phone: req.body.phone });
+        
+        if (!searchResult) {
+            throw new HttpException(409, 'People doesn\'t exist');
+        }
+    
+        res.status(201).send({ message: 'People has been created!', people: searchResult[0] });
     };
 
     updatePeople = async (req, res, next) => {

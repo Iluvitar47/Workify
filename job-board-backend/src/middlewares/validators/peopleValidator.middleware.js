@@ -4,12 +4,12 @@ exports.createPeopleSchema = [
     body('firstname')
         .exists()
         .withMessage('Your firstname is required')
-        .isAlpha()
+        .isString()
         .withMessage('Your firstname must be only alphabetic'),
     body('lastname')
         .exists()
         .withMessage('Your lastname is required')
-        .isAlpha()
+        .isString()
         .withMessage('Your lastname must be only alphabetic'),
     body('phone')
         .exists()

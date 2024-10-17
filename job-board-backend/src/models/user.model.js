@@ -22,7 +22,6 @@ class UserModel {
         const { columnSet, values } = multipleColumnSet(params)
         
         let sql = `SELECT * FROM ${this.tableName} WHERE ${columnSet}`;
-
         const result = await query(sql, [...values]);
         
         return result[0];

@@ -56,7 +56,7 @@ class UserController {
         this.checkValidation(req);
 
         await this.hashPassword(req);
-
+        
         const result = await UserModel.create(req.body);
 
         if (!result) {
