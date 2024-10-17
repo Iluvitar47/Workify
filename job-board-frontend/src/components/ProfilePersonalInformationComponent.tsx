@@ -131,23 +131,23 @@ const ProfilePersonalInformationComponent: React.FC = () => {
     }
 
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
+      <div className="flex justify-center bg-ligth dark:bg-dark pt-16 pb-36 w-full lg:w-1/2">
+        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm add-card">
           <h3 className="text-1xl font-bold mb-4 text-center">Personal Informations</h3>
-          {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
-          {error && <p className="text-green-500 text-center mb-4">{error}</p>}
+          {successMessage && <p className="text-info text-center mb-4">{successMessage}</p>}
+          {error && <p className="text-info text-center mb-4">{error}</p>}
           <div className="mb-4">
-            <label className="block text-gray-700">First Name:</label>
+            <label className="block text-fullblack dark:text-fullwhite">First Name:</label>
             <input
               type="text"
               name="firstname"
               value={formData.firstname || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-fullblack p-2 shadow-sm shadow-fullwhite hover:shadow-interact dark:shadow transition-all rounded mt-1 "
             />
           </div>
           <div className='mb-4'>
-            <label className="block text-gray-700">Last Name:</label>
+            <label className="block text-fullblack dark:text-fullwhite">Last Name:</label>
             <input
               type="text"
               name="lastname"
@@ -155,22 +155,22 @@ const ProfilePersonalInformationComponent: React.FC = () => {
               onChange={handleChange}
               pattern="^[A-Za-z]+$"
               title="Last name must be only alphabetic"
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-fullblack p-2 shadow-sm shadow-fullwhite hover:shadow-interact dark:shadow transition-all rounded mt-1 "
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Email:</label>
+            <label className="block text-fullblack dark:text-fullwhite">Email:</label>
             <input
               type="email"
               name="email"
               value={formData.email || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-fullblack p-2 shadow-sm shadow-fullwhite hover:shadow-interact dark:shadow transition-all rounded mt-1 "
             />
           </div>
           <div className='mb-4'>
 
-            <label className="block text-gray-700">Phone:</label>
+            <label className="block text-fullblack dark:text-fullwhite">Phone:</label>
             <input
               type="text"
               name="phone"
@@ -178,69 +178,69 @@ const ProfilePersonalInformationComponent: React.FC = () => {
               onChange={handleChange}
               pattern="^\+?\d{10,15}$"
               title="Phone number must be valid (e.g., +1234567890)"
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-fullblack p-2 shadow-sm shadow-fullwhite hover:shadow-interact dark:shadow transition-all rounded mt-1 "
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Experiences:</label>
+            <label className="block text-fullblack dark:text-fullwhite">Experiences:</label>
             <textarea
               name="experiences"
               value={formData.experiences || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-fullblack p-2 shadow-sm shadow-fullwhite hover:shadow-interact dark:shadow transition-all rounded mt-1 "
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Studies:</label>
+            <label className="block text-fullblack dark:text-fullwhite">Studies:</label>
             <textarea
               name="studies"
               value={formData.studies || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-fullblack p-2 shadow-sm shadow-fullwhite hover:shadow-interact dark:shadow transition-all rounded mt-1 "
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Skills:</label>
+            <label className="block text-fullblack dark:text-fullwhite">Skills:</label>
             <textarea
               name="skills"
               value={formData.skills || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-fullblack p-2 shadow-sm shadow-fullwhite hover:shadow-interact dark:shadow transition-all rounded mt-1 "
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Business Sector:</label>
+            <label className="block text-fullblack dark:text-fullwhite">Business Sector:</label>
             <input
               type="text"
               name="business_sector"
               value={formData.business_sector || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-fullblack p-2 shadow-sm shadow-fullwhite hover:shadow-interact dark:shadow transition-all rounded mt-1 "
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Location:</label>
+            <label className="block text-fullblack dark:text-fullwhite">Location:</label>
             <input
               type="text"
               name="location"
               value={formData.location || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-fullblack p-2 shadow-sm shadow-fullwhite hover:shadow-interact dark:shadow transition-all rounded mt-1 "
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Target Job:</label>
+            <label className="block text-fullblack dark:text-fullwhite">Target Job:</label>
             <input
               type="text"
               name="target_job"
               value={formData.target_job || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-fullblack p-2 shadow-sm shadow-fullwhite hover:shadow-interact dark:shadow transition-all rounded mt-1 "
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+            className="w-full button transition-colors hover:underline hover:text-info hover:bg-interact text-fullblack dark:text-fullwhite flex justify-center text-sm p-2 mt-6 "
           >
             Save Changes
           </button>

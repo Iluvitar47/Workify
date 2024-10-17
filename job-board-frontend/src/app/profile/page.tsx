@@ -9,9 +9,11 @@ export default function Profil() {
   return (
     <>
       <Header />
-      <h2 className="text-2xl font-bold mb-6 text-center">Edit Profile</h2>
+      <h2 className="text-2xl font-bold mt-16 text-center">Edit Profile</h2>
+      <div className='justify-center lg:flex items-start '>
       <ProfilePersonalInformationComponent />
       <ProfileAccountInformationComponent />
+      </div>
       <Footer />
     </>
   );

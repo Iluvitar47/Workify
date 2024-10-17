@@ -55,9 +55,11 @@ const ApplicationsDashboard: React.FC = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
+
       if (!token) {
         throw new Error('No authentication token found.');
       }
+
       if (!application) {
         throw new Error('Application not found');
       }
@@ -65,6 +67,7 @@ const ApplicationsDashboard: React.FC = () => {
       const requestBody = {
         message: formData.message,
       };
+
   
       const response = await fetch(`${updateApplicationsRoute}/${application.id}`, {
         method: 'PATCH',
@@ -74,18 +77,18 @@ const ApplicationsDashboard: React.FC = () => {
         },
         body: JSON.stringify(requestBody),
       });
+
   
       if (!response.ok) {
-        throw new Error('Failed to update user data');
+        throw new Error('Failed to update application data');
       }
   
       if (response.status === 202) {
-        // Assuming no content or just a success message, handle success directly
         setSuccessMessage('Application updated successfully!');
       } else {
-        // If a JSON response is expected
-        const updatedUser = await response.json();
-        setApplication(updatedUser);
+        const updatedApplication = await response.json();
+        console.log('Updated Application:', updatedApplication); // Log updated application
+        setApplication(updatedApplication);
         setSuccessMessage('Application updated successfully!');
       }
     } catch (err) {
@@ -93,7 +96,33 @@ const ApplicationsDashboard: React.FC = () => {
     }
   };
 
-  const renderUsersTable = () => {
+  const deleteApplication = async (id: number) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No authentication token found.');
+      }
+
+      const response = await fetch(`${updateApplicationsRoute}/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete application');
+      }
+
+      setShowModal(false);
+    } catch (err) {
+      console.error('Error:', err);
+      setError((err as Error).message);
+    }
+  }
+
+  const renderApplicationsTable = () => {
     return (
       <div className="flex justify-center items-center flex-col min-h-screen bg-gray-100">
         <h2 className="text-2xl font-bold mb-6 text-center">Applications</h2>
@@ -119,50 +148,75 @@ const ApplicationsDashboard: React.FC = () => {
                   <td className="border px-4 py-2">{application.people_id}</td>
                   <td className="border px-4 py-2">{application.advertisement_id}</td>
                   <td className="border px-4 py-2">{application.created_at}</td>
-                    <button className="btn" onClick={() => setShowModal(true)}>modifier</button>
-                    {showModal && 
-                      <Modal onClose={() => setShowModal(false)}>
-                        <div className="flex justify-center items-center min-h-screen bg-gray-100">
-                          <form onSubmit={handleSubmit} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
-                            <h2 className="text-2xl font-bold mb-6 text-center">Edit Application</h2>
-                            {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
-                            <div className="mb-4">
-                              <label className="block text-gray-700">ID:</label>
-                              <input
-                                type="number"
-                                name="id"
-                                value={formData.id || '4'}
-                                disabled
-                                onChange={handleChange}
-                                className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                              />
-                            </div>
-                            <div className="mb-4">
-                              <label className="block text-gray-700">Message:</label>
-                              <textarea
-                                name="message"
-                                value={formData.message || ''}
-                                onChange={handleChange}
-                                className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                              />
-                            </div>
-                            <button
-                              type="submit"
-                              className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
-                            >
-                              Save Changes
-                            </button>
-                          </form>
-                        </div>
-                      </Modal>
-                    }
-                  <button className="btn">supprimer</button>
+                  <td className="border px-4 py-2">
+                    <div className="flex space-x-2">
+                      <button className="btn" onClick={() => { setApplication(application); setFormData(application); setShowModal(true); }}>modifier</button>
+                      <button className="btn" onClick={() => { deleteApplication(application.id) }}>supprimer</button>
+                    </div>
+                  </td>
                 </tr>
               ))}
+              {showModal && 
+                <Modal onClose={() => setShowModal(false)}>
+                  <div className="flex justify-center items-center min-h-screen bg-gray-100">
+                    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
+                      <h2 className="text-2xl font-bold mb-6 text-center">Edit Application</h2>
+                      {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
+                      <div className="mb-4">
+                        <label className="block text-gray-700">ID:</label>
+                        <input
+                          type="number"
+                          name="id"
+                          value={formData.id || ''}
+                          disabled
+                          onChange={handleChange}
+                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-gray-700">Message:</label>
+                        <textarea
+                          name="message"
+                          value={formData.message || ''}
+                          onChange={handleChange}
+                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-gray-700">People ID:</label>
+                        <input
+                          type='number'
+                          disabled
+                          name="people_id"
+                          value={formData.people_id || ''}
+                          onChange={handleChange}
+                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-gray-700">Advertisement ID:</label>
+                        <input
+                          type='number'
+                          disabled
+                          name="advertisement_id"
+                          value={formData.advertisement_id || ''}
+                          onChange={handleChange}
+                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+                      >
+                        Save Changes
+                      </button>
+                    </form>
+                  </div>
+                </Modal>
+              }
             </tbody>
           </table>
         </div>
-        <div className="modal"></div>
       </div>
     );
   };
@@ -170,7 +224,7 @@ const ApplicationsDashboard: React.FC = () => {
   return (
     <>
       {error && <div className="error">{error}</div>}
-      {renderUsersTable()}
+      {renderApplicationsTable()}
     </>
   );
 };

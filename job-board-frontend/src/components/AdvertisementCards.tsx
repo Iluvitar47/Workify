@@ -83,7 +83,7 @@ const AdvertisementCards: React.FC = () => {
 
   const renderAdvertisementsWithCompanies = (ads: Advertisement[]) => {
     return (
-      <div className="grid grid-flow-row grid-cols-1">
+      <div className="grid grid-flow-row grid-cols-1 pt-20 pb-64">
         {ads.map((ad) => (
           <div key={ad.id} className="add-card pb-5 my-5 mx-6 sm:mx-12 p-2 sm:p-4">
             <h1 className="text-2xl font-bold">{ad.title}</h1>
@@ -105,6 +105,13 @@ const AdvertisementCards: React.FC = () => {
                 <p className="mt-2 text-base">
                   <strong>Horaires :</strong> {ad.working_times}
                 </p>
+                <div className='absolute'>
+                <button
+                  className="button button transition-colors hover:underline hover:text-info hover:bg-interact text-fullblack dark:text-fullwhite flex items-center justify-center text-sm p-2 mt-6 col-span-2">
+                  Postuler
+                  </button>
+    
+                </div>
               </>
             ) : (
               <p className="mt-2 text-base">
