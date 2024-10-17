@@ -1,5 +1,5 @@
 interface Application {
-  id: string;
+  id: number;
   isRead: number;
   message: string;
   people_id: number;
