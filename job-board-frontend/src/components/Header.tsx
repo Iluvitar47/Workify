@@ -15,30 +15,37 @@ const Header: React.FC = () => {
   }, []);
 
   return (
-    <header>
-      <button>
-        <a href="/">Home</a>
-      </button>
-      {token ? (
-        <>
-          <button>
-            <a href="/profile">Profile</a>
+    <header className="bg-fullwhite dark:bg-fullblack h-20 flex items-center px-4">
+      <div className="flex w-full justify-between items-center">
+        <div className="flex items-center space-x-4">
+          <button className="text-interact hover:underline">
+            <a href="/">Home</a>
           </button>
-          {permission === "admin" ? (
+          {permission === "admin" && (
+            <button className="text-interact hover:underline">
+              <a href="/offers">Offers</a>
+            </button>
+          )}
+        </div>
+        <div className="flex items-center space-x-4">
+          {token ? (
+            <button className="text-interact hover:underline">
+              <a href="/profile">Profile</a>
+            </button>
+          ) : (
             <>
-              <button>
-                <a href="/offers">Offers</a>
+              <button className="text-interact hover:underline">
+                <a href="/login">Login</a>
+              </button>
+              <button className="text-interact hover:underline">
+                <a href="/signup">Sign Up</a>
               </button>
             </>
-          ) : null}
-        </>
-      ) : (
-        <button>
-          <a href="/login">Login</a>
-        </button>
-      )}
+          )}
+        </div>
+      </div>
     </header>
   );
-}
+};
 
 export default Header;
