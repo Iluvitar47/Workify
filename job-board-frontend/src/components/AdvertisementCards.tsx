@@ -83,7 +83,7 @@ const AdvertisementCards: React.FC = () => {
 
   const renderAdvertisementsWithCompanies = (ads: Advertisement[]) => {
     return (
-      <div className="grid grid-flow-row grid-cols-1">
+      <div className="grid grid-flow-row grid-cols-1 pt-20 pb-64">
         {ads.map((ad) => (
           <div key={ad.id} className="add-card pb-5 my-5 mx-6 sm:mx-12 p-2 sm:p-4">
             <h1 className="text-2xl font-bold">{ad.title}</h1>
