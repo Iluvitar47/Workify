@@ -45,112 +45,112 @@ const SignUpComponent: React.FC = () => {
 
   const renderSignUp = () => {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
+      <div className="flex justify-center items-center min-h-screen">
+        <form onSubmit={handleSubmit} className="p-6  w-full max-w-sm">
           <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
           <h3 className="text-1xl font-bold mb-4 text-center">Personal informations</h3>
           <div className="mb-4">
-            <label className="block text-gray-700">First Name:</label>
             <input
               type="text"
               name="firstname"
               value={formData.firstname || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input w-full  text-fullblack"
+              placeholder='First Name'
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Last Name:</label>
             <input
               type="text"
               name="lastname"
               value={formData.lastname || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input w-full  text-fullblack "
+              placeholder='Last Name'
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Email:</label>
             <input
               type="email"
               name="email"
               value={formData.email || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input w-full  text-fullblack "
+              placeholder='Email'
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Phone:</label>
             <input
               type="text"
               name="phone"
               value={formData.phone || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input w-full  text-fullblack "
+              placeholder='Phone'
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Experiences:</label>
             <textarea
               name="experiences"
               value={formData.experiences || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input w-full  text-fullblack "
+              placeholder='Experiences'
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Studies:</label>
             <textarea
               name="studies"
               value={formData.studies || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input w-full  text-fullblack "
+              placeholder='Studies'
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Skills:</label>
             <textarea
               name="skills"
               value={formData.skills || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input w-full  text-fullblack "
+              placeholder='Skills'
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Business Sector:</label>
             <textarea
               name="business_sector"
               value={formData.business_sector || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input w-full  text-fullblack "
+              placeholder='Business Sector'
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Target Job:</label>
             <textarea
               name="target_job"
               value={formData.target_job || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input w-full  text-fullblack "
+              placeholder='Target Job'
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Location:</label>
             <input
               type="text"
               name="location"
               value={formData.location || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input w-full  text-fullblack "
+              placeholder='Location'
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+            className="w-full button transition-colors hover:underline hover:text-info hover:bg-interact text-fullblack dark:text-fullwhite flex justify-center text-sm  mt-6 h-full"
           >
             Submit
           </button>
-          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+          {error && <p className="text-info text-center mt-4">{error}</p>}
         </form>
       </div>
     );

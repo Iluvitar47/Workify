@@ -50,6 +50,7 @@ body {
   border-left: 2px solid #f5c800;
   box-shadow: var(--input);
   padding: 0.3rem;
+  margin-bottom: 1rem;
   /* className="input bg-fullwhite dark:bg-fullblack text-fullblack dark:text-fullwhite flex items-center justify-center text-sm placeholder:italic placeholder:text-foreground" */
 }
 
