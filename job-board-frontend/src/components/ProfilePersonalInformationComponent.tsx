@@ -74,7 +74,6 @@ const ProfilePersonalInformationComponent: React.FC = () => {
       const token = localStorage.getItem('token');
       const currentUser = localStorage.getItem('user');
       const currentPeopleID = currentUser ? JSON.parse(currentUser).people_id : null;
-      console.log('currentPeopleID', currentPeopleID);
 
       if (!token) {
         throw new Error('No authentication token found.');
