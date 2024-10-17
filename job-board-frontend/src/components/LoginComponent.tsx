@@ -40,8 +40,6 @@ const LoginComponent: React.FC = () => {
             router.push('/offers');
           }
         }
-
-        // router.push('/');
       })
       .catch((err) => {
         setError(err.message);
