@@ -58,37 +58,37 @@ const SignUpUserComponent: React.FC = () => {
 
   const renderSignUp = () => {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
+      <div className="flex justify-center items-center min-h-screen bg-ligth dark:bg-dark">
+        <form onSubmit={handleSubmit} className="p-6  w-full max-w-sm">
           <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
           <h3 className="text-1xl font-bold mb-4 text-center">Account informations</h3>
           <div className="mb-4">
-            <label className="block text-gray-700">Email:</label>
             <input
               type="email"
               name="email"
               value={formData.email || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input w-full  text-fullblack "
+              placeholder='Email'
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Password:</label>
             <input
               type="password"
               name="password"
               value={formData.password || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input w-full p-2 text-fullblack "
+              placeholder="Password"
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+            className="w-full button transition-colors hover:underline hover:text-info hover:bg-interact text-fullblack dark:text-fullwhite flex justify-center text-sm p-2 mt-6 h-full"
           >
             Submit
           </button>
-          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+          {error && <p className="text-info text-center mt-4">{error}</p>}
         </form>
       </div>
     );
