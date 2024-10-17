@@ -105,6 +105,13 @@ const AdvertisementCards: React.FC = () => {
                 <p className="mt-2 text-base">
                   <strong>Horaires :</strong> {ad.working_times}
                 </p>
+                <div className='absolute'>
+                <button
+                  className="button button transition-colors hover:underline hover:text-info hover:bg-interact text-fullblack dark:text-fullwhite flex items-center justify-center text-sm p-2 mt-6 col-span-2">
+                  Postuler
+                  </button>
+    
+                </div>
               </>
             ) : (
               <p className="mt-2 text-base">
