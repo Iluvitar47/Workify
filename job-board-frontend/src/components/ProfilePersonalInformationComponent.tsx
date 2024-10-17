@@ -240,7 +240,7 @@ const ProfilePersonalInformationComponent: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+            className="w-full button transition-colors hover:underline hover:text-info hover:bg-interact text-fullblack dark:text-fullwhite flex justify-center text-sm p-2 mt-6 "
           >
             Save Changes
           </button>
