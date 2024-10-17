@@ -34,7 +34,6 @@ const ProfileAccountInformationComponent: React.FC = () => {
         const data = await response.json();
         setUser(data);
         setFormData(data);
-        console.log('data', data);
       } catch (err) {
         setError((err as Error).message);
       }
@@ -57,7 +56,6 @@ const ProfileAccountInformationComponent: React.FC = () => {
       const token = localStorage.getItem('token');
       const currentUser = localStorage.getItem('user');
       const currentUserID = currentUser ? JSON.parse(currentUser).id : null;
-      console.log('currentPeopleID', currentUserID);
 
       if (!token) {
         throw new Error('No authentication token found.');

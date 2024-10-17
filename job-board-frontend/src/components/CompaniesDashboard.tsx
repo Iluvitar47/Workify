@@ -13,39 +13,41 @@ const CompaniesDashboard: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState<Partial<Company>>({});
+  const [formDataAdd, setFormDataAdd] = useState<Partial<Company>>({});
   const [showModal, setShowModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const bearer = 'Bearer ';
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        setError('Invalid credentials');
-      }
-
-      await fetch(companiesRoute, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: bearer + token,
-        },
+  const fetchData = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError('Invalid credentials');
+    }
+    await fetch(companiesRoute, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: bearer + token,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Invalid credentials');
+        }
+        return res.json();
       })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error('Invalid credentials');
-          }
-          return res.json();
-        })
-        .then((data) => {
-          setCompanies(data);
-        })
-        .catch((err) => {
-          setError(err.message);
-        });
-    };
+      .then((data) => {
+        setCompanies(data);
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
+  };
 
+  useEffect(() => {
     fetchData();
-  }, []);
+  }, [refresh]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -98,6 +100,8 @@ const CompaniesDashboard: React.FC = () => {
         setCompany(updatedCompany);
         setSuccessMessage('Company updated successfully!');
       }
+
+      setRefresh(!refresh);
     } catch (err) {
       setError((err as Error).message);
     }
@@ -123,10 +127,64 @@ const CompaniesDashboard: React.FC = () => {
       }
 
       setShowModal(false);
+      setRefresh(!refresh);
+
     } catch (err) {
       console.error('Error:', err);
       setError((err as Error).message);
     }
+  };
+
+  const handleSubmitAdd = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        throw new Error('No authentication token found.');
+      }
+      const requestBody = {
+        name: formDataAdd.name,
+        email: formDataAdd.email,
+        phone: formDataAdd.phone,
+        business_sector: formDataAdd.business_sector,
+        location: formDataAdd.location,
+        employees: formDataAdd.employees,
+        description: formDataAdd.description,
+      };
+  
+      const response = await fetch(`${companiesRoute}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+  
+      if (!response.ok) {
+        throw new Error('Failed to update user data');
+      }
+  
+      if (response.status === 202) {
+        setSuccessMessage('User updated successfully!');
+      } else {
+        setSuccessMessage('User updated successfully!');
+      }
+
+      setRefresh(!refresh);
+    } catch (err) {
+      setError((err as Error).message);
+    }
+  };
+
+  const handleChangeAdd = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormDataAdd({
+      ...formDataAdd,
+      [name]: value,
+    });
   };
 
   const renderCompaniesTable = () => {
@@ -144,7 +202,7 @@ const CompaniesDashboard: React.FC = () => {
                 <th className="px-4 py-2">Business Sector</th>
                 <th className="px-4 py-2">Location</th>
                 <th className="px-4 py-2">Employees</th>
-                <th className="px-4 py-2">Description</th>
+                <th className="px-4 py-2">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -157,7 +215,6 @@ const CompaniesDashboard: React.FC = () => {
                   <td className="border px-4 py-2">{company.business_sector}</td>
                   <td className="border px-4 py-2">{company.location}</td>
                   <td className="border px-4 py-2">{company.employees}</td>
-                  <td className="border px-4 py-2">{company.description}</td>
                   <td className="border px-4 py-2">
                     <div className="flex space-x-2">
                       <button className="btn" onClick={() => { setCompany(company); setFormData(company); setShowModal(true); }}>modifier</button>
@@ -264,6 +321,91 @@ const CompaniesDashboard: React.FC = () => {
             </tbody>
           </table>
         </div>
+        <button className="btn" onClick={() => { setShowAddModal(true); }}>Add Company</button>
+        {showAddModal && 
+            <Modal onClose={() => setShowAddModal(false)}>
+                <div className="flex justify-center items-center min-h-screen bg-gray-100">
+                    <form onSubmit={handleSubmitAdd} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
+                        <h2 className="text-2xl font-bold mb-6 text-center">Add Company</h2>
+                        {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
+                      <div className="mb-4">
+                        <label className="block text-gray-700">Name:</label>
+                        <textarea
+                          name="name"
+                          value={formDataAdd.name || ''}
+                          onChange={handleChangeAdd}
+                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-gray-700">Email:</label>
+                        <input
+                          type='email'
+                          name="email"
+                          value={formDataAdd.email || ''}
+                          onChange={handleChangeAdd}
+                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-gray-700">Phone:</label>
+                        <input
+                          type='tel'
+                          name="phone"
+                          value={formDataAdd.phone || ''}
+                          onChange={handleChangeAdd}
+                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-gray-700">Business sector:</label>
+                        <input
+                          type='text'
+                          name="business_sector"
+                          value={formDataAdd.business_sector || ''}
+                          onChange={handleChangeAdd}
+                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-gray-700">Location:</label>
+                        <input
+                          type='text'
+                          name="location"
+                          value={formDataAdd.location || ''}
+                          onChange={handleChangeAdd}
+                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-gray-700">Employees:</label>
+                        <input
+                          type='number'
+                          name="employees"
+                          value={formDataAdd.employees || ''}
+                          onChange={handleChangeAdd}
+                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-gray-700">Description:</label>
+                        <textarea
+                          name="description"
+                          value={formDataAdd.description || ''}
+                          onChange={handleChangeAdd}
+                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                        <button
+                            type="submit"
+                            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+                        >
+                            Add Company
+                        </button>
+                    </form>
+                </div>
+            </Modal>
+        }
       </div>
     );
   };

@@ -56,7 +56,7 @@ class UserController {
         this.checkValidation(req);
 
         await this.hashPassword(req);
-        
+
         const result = await UserModel.create(req.body);
 
         if (!result) {
@@ -87,6 +87,7 @@ class UserController {
         if (!result) {
             throw new HttpException(404, 'User not found');
         }
+
         res.status(202).send('User has been deleted');
     };
 

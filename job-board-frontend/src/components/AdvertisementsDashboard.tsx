@@ -3,7 +3,6 @@
 import { Advertisement } from '@/models/advertisements.model';
 import React, { useState, useEffect } from 'react';
 import Modal from '../components/ModalsDashboard';
-import { useRouter } from 'next/navigation';
 
 const AdvertisementsComponents: React.FC = () => {
   const urlApi = process.env.NEXT_PUBLIC_URL_API;
@@ -12,38 +11,43 @@ const AdvertisementsComponents: React.FC = () => {
   const [advertisement, setAdvertisement] = useState<Advertisement | null>(null);
   const [advertisements, setAdvertisements] = useState<Advertisement[]>([]);
   const [formData, setFormData] = useState<Partial<Advertisement>>({});
+  const [formDataAdd, setFormDataAdd] = useState<Partial<Advertisement>>({});
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const bearer = 'Bearer ';
-  const router = useRouter();
+
+  const fetchData = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError('Invalid credentials');
+    }
+    await fetch(advertisementsRoute, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: bearer + token,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Invalid credentials');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setAdvertisements(data);
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const token = localStorage.getItem('token');
-      await fetch(advertisementsRoute, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: bearer + token,
-        },
-      })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error('Invalid credentials');
-          }
-          return res.json();
-        })
-        .then((data) => {
-          setAdvertisements(data);
-        })
-        .catch((err) => {
-          setError(err.message);
-        });
-    };
-
     fetchData();
-  }, []);
+  }, [refresh]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -95,8 +99,8 @@ const AdvertisementsComponents: React.FC = () => {
         const updatedAdvertisement = await response.json();
         setAdvertisement(updatedAdvertisement);
         setSuccessMessage('Advertisement updated successfully!');
-        router.push('/');
       }
+      setRefresh(!refresh);
     } catch (err) {
       setError((err as Error).message);
     }
@@ -122,11 +126,63 @@ const AdvertisementsComponents: React.FC = () => {
       }
 
       setShowModal(false);
+      setRefresh(!refresh);
     } catch (err) {
-      console.error('Error:', err);
       setError((err as Error).message);
     }
-  }
+  };
+
+  const handleSubmitAdd = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        throw new Error('No authentication token found.');
+      }
+  
+      const requestBody = {
+        title: formDataAdd.title,
+        description: formDataAdd.description,
+        wages: formDataAdd.wages,
+        location: formDataAdd.location,
+        working_times: formDataAdd.working_times,
+        company_id: formDataAdd.company_id,
+      };
+  
+      const response = await fetch(`${advertisementsRoute}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+  
+      if (!response.ok) {
+        throw new Error('Failed to update advertisement data');
+      }
+  
+      if (response.status === 202) {
+        setSuccessMessage('Advertisement updated successfully!');
+      } else {
+        setSuccessMessage('Advertisement updated successfully!');
+      }
+
+        setRefresh(!refresh);
+    } catch (err) {
+      setError((err as Error).message);
+    }
+  };
+
+  const handleChangeAdd = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormDataAdd({
+      ...formDataAdd,
+      [name]: value,
+    });
+  };
 
   const renderAdvertisementsTable = () => {
     return (
@@ -185,10 +241,10 @@ const AdvertisementsComponents: React.FC = () => {
                         <label className="block text-gray-700">Title:</label>
                         <input
                             type='text'
-                          name="title"
-                          value={formData.title || ''}
-                          onChange={handleChange}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            name="title"
+                            value={formData.title || ''}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </div>
                       <div className="mb-4">
@@ -204,20 +260,20 @@ const AdvertisementsComponents: React.FC = () => {
                         <label className="block text-gray-700">Wages:</label>
                         <input
                             type='number'
-                          name="wages"
-                          value={formData.wages || ''}
-                          onChange={handleChange}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            name="wages"
+                            value={formData.wages || ''}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </div>
                       <div className="mb-4">
                         <label className="block text-gray-700">Location:</label>
                         <input
                             type='text'
-                          name="location"
-                          value={formData.location || ''}
-                          onChange={handleChange}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            name="location"
+                            value={formData.location || ''}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </div>
                       <div className="mb-4">
@@ -254,6 +310,82 @@ const AdvertisementsComponents: React.FC = () => {
             </tbody>
           </table>
         </div>
+        <button className="btn" onClick={() => { setShowAddModal(true); }}>Add Advertisement</button>
+        {showAddModal && 
+            <Modal onClose={() => setShowAddModal(false)}>
+                <div className="flex justify-center items-center min-h-screen bg-gray-100">
+                    <form onSubmit={handleSubmitAdd} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
+                        <h2 className="text-2xl font-bold mb-6 text-center">Add Advertisement</h2>
+                        {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
+                        <div className="mb-4">
+                            <label className="block text-gray-700">Title:</label>
+                            <input
+                                type='text'
+                                name="title"
+                                value={formDataAdd.title || ''}
+                                onChange={handleChangeAdd}
+                                className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700">Description:</label>
+                            <textarea
+                                name="description"
+                                value={formDataAdd.description || ''}
+                                onChange={handleChangeAdd}
+                                className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700">Wages:</label>
+                            <input
+                                type='number'
+                                name="wages"
+                                value={formDataAdd.wages || ''}
+                                onChange={handleChangeAdd}
+                                className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700">Location:</label>
+                            <input
+                                type='text'
+                                name="location"
+                                value={formDataAdd.location || ''}
+                                onChange={handleChangeAdd}
+                                className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700">Working times:</label>
+                            <input
+                                type='text'
+                                name="working_times"
+                                value={formDataAdd.working_times || ''}
+                                onChange={handleChangeAdd}
+                                className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700">Company ID:</label>
+                            <input
+                                type='number'
+                                name="company_id"
+                                value={formDataAdd.company_id || ''}
+                                onChange={handleChangeAdd}
+                                className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <button
+                            type="submit"
+                            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+                        >
+                            Add Advertisement
+                        </button>
+                    </form>
+                </div>
+            </Modal>
+        }
       </div>
     );
   };
