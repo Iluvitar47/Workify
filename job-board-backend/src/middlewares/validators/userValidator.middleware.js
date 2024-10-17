@@ -32,12 +32,9 @@ exports.updateUserSchema = [
         .withMessage('Your email is invalid')
         .normalizeEmail(),
     body('permission')
-        .custom((value) => {
-            if (value === Role.Admin) {
-                throw new Error('Not allowed!');
-            }
-            return true;
-        }),
+        .optional()
+        .isIn([Role.Admin, Role.Applicants])
+        .withMessage('Invalid permission'),
     body('password')
         .optional()
         .notEmpty()
@@ -50,7 +47,7 @@ exports.updateUserSchema = [
     body()
         .custom(value => {
             const updates = Object.keys(value);
-            const allowUpdates = ['email', 'password', 'people_id'];
+            const allowUpdates = ['email', 'permission', 'people_id'];
             return updates.every(update => allowUpdates.includes(update));
         })  
         .withMessage('Invalid updates!')
