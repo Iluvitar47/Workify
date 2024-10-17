@@ -2,25 +2,28 @@
 
 import React, { useEffect, useState } from 'react';
 import type { User } from '../models/user.model';
+import type { People } from '../models/people.model';
 
 const EditProfileComponent: React.FC = () => {
   const urlApi = process.env.NEXT_PUBLIC_URL_API;
-  const profileRoute = `${urlApi}/users/current`;
-  const updateRoute = `${urlApi}/users`;
+  const userRoute = `${urlApi}/users/current`;
+  const updateRoute = `${urlApi}/people`;
+  const peopleRoute = `${urlApi}/people/id/`;
   const [user, setUser] = useState<User | null>(null);
-  const [formData, setFormData] = useState<Partial<User>>({});
+  const [people, setPeople] = useState<Partial<People>>({});
+  const [formData, setFormData] = useState<Partial<People>>({});
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchPeopleData = async () => {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
           throw new Error('No authentication token found.');
         }
 
-        const response = await fetch(profileRoute, {
+        const response = await fetch(userRoute, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -33,14 +36,29 @@ const EditProfileComponent: React.FC = () => {
 
         const data = await response.json();
         setUser(data);
-        setFormData(data);
+
+        const peopleResponse = await fetch(peopleRoute + data.people_id, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (!peopleResponse.ok) {
+          throw new Error('Failed to fetch people data');
+        }
+
+        const peopleData = await peopleResponse.json();
+        setPeople(peopleData);
+        setFormData(peopleData);
       } catch (err) {
         setError((err as Error).message);
       }
     };
 
-    fetchUserData();
-  }, [profileRoute]);
+    fetchPeopleData();
+  }, [userRoute]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -55,7 +73,8 @@ const EditProfileComponent: React.FC = () => {
     try {
       const token = localStorage.getItem('token');
       const currentUser = localStorage.getItem('user');
-      const currentUserID = currentUser ? JSON.parse(currentUser).id : null;
+      const currentPeopleID = currentUser ? JSON.parse(currentUser).people_id : null;
+      console.log('currentPeopleID', currentPeopleID);
 
       if (!token) {
         throw new Error('No authentication token found.');
@@ -64,7 +83,7 @@ const EditProfileComponent: React.FC = () => {
         throw new Error('User not found');
       }
 
-      if (currentUserID !== user.id) {
+      if (currentPeopleID !== people.id) {
         throw new Error("Unauthorized action. You cannot modify another user's data.");
       }
 
@@ -81,7 +100,7 @@ const EditProfileComponent: React.FC = () => {
         target_job: formData.target_job,
       };
 
-      const response = await fetch(`${updateRoute}/${user.id}`, {
+      const response = await fetch(`${updateRoute}/${user.people_id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -97,8 +116,8 @@ const EditProfileComponent: React.FC = () => {
       if (response.status === 202) {
         setSuccessMessage('Profile updated successfully!');
       } else {
-        const updatedUser = await response.json();
-        setUser(updatedUser);
+        const updatedPeople = await response.json();
+        setPeople(updatedPeople);
         setSuccessMessage('Profile updated successfully!');
       }
     } catch (err) {
@@ -112,7 +131,7 @@ const EditProfileComponent: React.FC = () => {
       return <p className="text-red-500 text-center mt-4">{error}</p>;
     }
 
-    if (!user) {
+    if (!people) {
       return <p className="text-center mt-4">Loading...</p>;
     }
 

@@ -51,12 +51,17 @@ exports.createPeopleSchema = [
 exports.updatePeopleSchema = [
     body('firstname')
         .optional()
-        .isAlpha()
+        .isString()
         .withMessage('Your firstname must be only alphabetic'),
     body('lastname')
         .optional()
-        .isAlpha()
+        .isString()
         .withMessage('Your lastname must be only alphabetic'),
+    body('email')
+        .optional()
+        .isEmail()
+        .withMessage('Your email is invalid')
+        .normalizeEmail(),
     body('phone')
         .optional()
         .isMobilePhone()
@@ -88,7 +93,7 @@ exports.updatePeopleSchema = [
     body()
         .custom(value => {
             const updates = Object.keys(value);
-            const allowUpdates = ['firstname', 'lastname', 'password', 'phone', 'experiences', 'studies', 'skills', 'business_sector', 'target_job', 'location'];
+            const allowUpdates = ['firstname', 'lastname', 'email', 'phone', 'experiences', 'studies', 'skills', 'business_sector', 'target_job', 'location'];
             return updates.every(update => allowUpdates.includes(update));
         })  
         .withMessage('Invalid updates!')
