@@ -107,29 +107,29 @@ const ProfileAccountInformationComponent: React.FC = () => {
     }
 
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
+      <div className="flex justify-center items-center pb-52 bg-ligth dark:bg-dark">
+        <form onSubmit={handleSubmit} className="bg-ligth dark:bg-dark p-6 rounded-md shadow-md w-full max-w-sm add-card">
           <h3 className="text-1xl font-bold mb-4 text-center">Account Informations</h3>
           {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
           {error && <p className="text-green-500 text-center mb-4">{error}</p>}
           <div className="mb-4">
-            <label className="block text-gray-700">Email:</label>
+            <label className="block text-fullblack dark:text-fullwhite">Email:</label>
             <input
               type="email"
               name="email"
               value={formData.email || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-fullblack p-2 shadow-sm shadow-fullwhite hover:shadow-interact  dark:shadow transition-all rounded mt-1"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Password:</label>
+            <label className="block text-fullblack dark:text-fullwhite">Password:</label>
             <input
               type="password"
               name="password"
               value={formData.password || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-fullblack p-2 shadow-sm shadow-fullwhite hover:shadow-interact  dark:shadow transition-all rounded mt-1"
             />
           </div>
           <button
