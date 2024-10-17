@@ -2,13 +2,13 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer className=" bg-fullwhite dark:bg-fullblack  footer h-full">
       <div className="">
-        <div className="">
+        <div className="text-center h-full pt-4 pb-4">
           <h1>Job Board</h1>
-          <p>10-2024 - Job Board</p>
+          <h3>Fait en Octobre 2024</h3>
         </div>
-        <div className="">
+        <div className="text-center h-full pb-4">
           <p>Par Mathéo Fontaine et Théo Deschamps</p>
         </div>
       </div>
