@@ -77,7 +77,7 @@ const LoginComponent: React.FC = () => {
           >
             Submit
           </button>
-          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+          {error && <p className="text-info text-center mt-4">{error}</p>}
         </form>
       </div>
     );
