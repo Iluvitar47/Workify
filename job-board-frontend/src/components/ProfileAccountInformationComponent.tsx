@@ -107,7 +107,7 @@ const ProfileAccountInformationComponent: React.FC = () => {
     }
 
     return (
-      <div className="flex justify-center items-center pb-52 bg-ligth dark:bg-dark">
+      <div className="flex justify-center items-center pb-52 pt-16 bg-ligth dark:bg-dark w-full lg:w-1/2 ">
         <form onSubmit={handleSubmit} className="bg-ligth dark:bg-dark p-6 rounded-md shadow-md w-full max-w-sm add-card">
           <h3 className="text-1xl font-bold mb-4 text-center">Account Informations</h3>
           {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}

@@ -131,7 +131,7 @@ const ProfilePersonalInformationComponent: React.FC = () => {
     }
 
     return (
-      <div className="flex justify-center items-center bg-ligth dark:bg-dark pt-16 pb-36">
+      <div className="flex justify-center bg-ligth dark:bg-dark pt-16 pb-36 w-full lg:w-1/2">
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm add-card">
           <h3 className="text-1xl font-bold mb-4 text-center">Personal Informations</h3>
           {successMessage && <p className="text-info text-center mb-4">{successMessage}</p>}
