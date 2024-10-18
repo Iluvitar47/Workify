@@ -12,35 +12,42 @@ const ApplicationsDashboard: React.FC = () => {
   const [applications, setApplications] = useState<Application[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState<Partial<Application>>({});
+  const [formDataAdd, setFormDataAdd] = useState<Partial<Application>>({});
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const bearer = 'Bearer ';
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = localStorage.getItem('token');
-      await fetch(applciationsRoute, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: bearer + token,
-        },
+  const fetchData = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError('Invalid credentials');
+    }
+    await fetch(applciationsRoute, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: bearer + token,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Invalid credentials');
+        }
+        return res.json();
       })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error('Invalid credentials');
-          }
-          return res.json();
-        })
-        .then((data) => {
-          setApplications(data);
-        })
-        .catch((err) => {
-          setError(err.message);
-        });
-    };
+      .then((data) => {
+        setApplications(data);
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
+  };
+
+  useEffect(() => {
     fetchData();
-  }, []);
+  }, [refresh]);
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -87,11 +94,19 @@ const ApplicationsDashboard: React.FC = () => {
         setSuccessMessage('Application updated successfully!');
       } else {
         const updatedApplication = await response.json();
-        console.log('Updated Application:', updatedApplication); // Log updated application
         setApplication(updatedApplication);
         setSuccessMessage('Application updated successfully!');
+
+        useEffect(() => {
+          const interval = setInterval(() => {
+              fetchData();
+          }, 1000, []);
+      
+          return () => clearInterval(interval);
+        }, []);
       }
-    } catch (err) {
+      setRefresh(!refresh);
+  } catch (err) {
       setError((err as Error).message);
     }
   };
@@ -116,11 +131,73 @@ const ApplicationsDashboard: React.FC = () => {
       }
 
       setShowModal(false);
+      setRefresh(!refresh);
     } catch (err) {
       console.error('Error:', err);
       setError((err as Error).message);
     }
-  }
+  };
+
+  const handleSubmitAdd = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        throw new Error('No authentication token found.');
+      }
+  
+      const requestBody = {
+        isRead: formDataAdd.isRead,
+        message: formDataAdd.message,
+        people_id: formDataAdd.people_id,
+        advertisement_id: formDataAdd.advertisement_id
+      };
+
+      if (requestBody.isRead !== "true" && requestBody.isRead !== "false") {
+        throw new Error('Must be true or false');
+      } else {
+        if (requestBody.isRead === "true") {
+          requestBody.isRead = true;
+        }
+        if (requestBody.isRead === "false") {
+          requestBody.isRead = false;
+        }
+      }
+  
+      const response = await fetch(`${applciationsRoute}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+  
+      if (!response.ok) {
+        throw new Error('Failed to update application data');
+      }
+  
+      if (response.status === 202) {
+        setSuccessMessage('Application updated successfully!');
+      } else {
+        setSuccessMessage('Application updated successfully!');
+      }
+
+      setRefresh(!refresh);
+    } catch (err) {
+      setError((err as Error).message);
+    }
+  };
+
+  const handleChangeAdd = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormDataAdd({
+      ...formDataAdd,
+      [name]: value,
+    });
+  };
 
   const renderApplicationsTable = () => {
     return (
@@ -217,6 +294,62 @@ const ApplicationsDashboard: React.FC = () => {
             </tbody>
           </table>
         </div>
+        <button className="btn" onClick={() => { setShowAddModal(true); }}>Add Application</button>
+        {showAddModal && 
+            <Modal onClose={() => setShowAddModal(false)}>
+                <div className="flex justify-center items-center min-h-screen bg-gray-100">
+                    <form onSubmit={handleSubmitAdd} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
+                        <h2 className="text-2xl font-bold mb-6 text-center">Add Application</h2>
+                        {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
+                        <div className="mb-4">
+                          <label className="block text-gray-700">Read:</label>
+                          <input
+                            type='text'
+                            name="isRead"
+                            value={formDataAdd.isRead?.toString() || ''}
+                            onChange={handleChangeAdd}
+                            className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        </div>
+                        <div className="mb-4">
+                          <label className="block text-gray-700">Message:</label>
+                          <textarea
+                            name="message"
+                            value={formDataAdd.message || ''}
+                            onChange={handleChangeAdd}
+                            className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        </div>
+                        <div className="mb-4">
+                          <label className="block text-gray-700">People ID:</label>
+                          <input
+                            type='number'
+                            name="people_id"
+                            value={formDataAdd.people_id || ''}
+                            onChange={handleChangeAdd}
+                            className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        </div>
+                        <div className="mb-4">
+                          <label className="block text-gray-700">Advertisement ID:</label>
+                          <input
+                            type='number'
+                            name="advertisement_id"
+                            value={formDataAdd.advertisement_id || ''}
+                            onChange={handleChangeAdd}
+                            className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        </div>
+                        <button
+                            type="submit"
+                            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+                        >
+                            Add Application
+                        </button>
+                    </form>
+                </div>
+            </Modal>
+        }
       </div>
     );
   };

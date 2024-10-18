@@ -16,7 +16,6 @@ const SignUpUserComponent: React.FC = () => {
     const peopleTokenString = localStorage.getItem('people');
     if (peopleTokenString) {
       const peopleToken: People = JSON.parse(peopleTokenString);
-      console.log('peopleToken', peopleToken);
       setFormData((prevData) => ({
         ...prevData,
         email: peopleToken.email,
@@ -46,7 +45,6 @@ const SignUpUserComponent: React.FC = () => {
         if (!res.ok) {
           throw new Error('Unable to create account');
         }
-        console.log('res', res);
         return res;
       })
       .then(() => {
