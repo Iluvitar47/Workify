@@ -189,8 +189,8 @@ const CompaniesDashboard: React.FC = () => {
 
   const renderCompaniesTable = () => {
     return (
-      <div className="flex justify-center items-center flex-col min-h-screen bg-gray-100">
-        <h2 className="text-2xl font-bold mb-6 text-center">Companies</h2>
+      <div className="flex justify-center items-center flex-col ">
+        <h2 className=" mb-6 mt-12 text-center text-info">Companies</h2>
         <div className="mb-4">
           <table className="table-auto">
             <thead>
@@ -205,17 +205,17 @@ const CompaniesDashboard: React.FC = () => {
                 <th className="px-4 py-2">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className='border-t border-b border-x-dark'>
               {companies.map((company, index) => (
                 <tr key={index}>
-                  <td className="border px-4 py-2">{company.id}</td>
-                  <td className="border px-4 py-2">{company.name}</td>
-                  <td className="border px-4 py-2">{company.email}</td>
-                  <td className="border px-4 py-2">{company.phone}</td>
-                  <td className="border px-4 py-2">{company.business_sector}</td>
-                  <td className="border px-4 py-2">{company.location}</td>
-                  <td className="border px-4 py-2">{company.employees}</td>
-                  <td className="border px-4 py-2">
+                  <td className="border-t border-b border-x-dark px-4 py-2">{company.id}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{company.name}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{company.email}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{company.phone}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{company.business_sector}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{company.location}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{company.employees}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">
                     <div className="flex space-x-2">
                       <button className="btn" onClick={() => { setCompany(company); setFormData(company); setShowModal(true); }}>modifier</button>
                       <button className="btn" onClick={() => { deleteCompany(company.id) }}>supprimer</button>

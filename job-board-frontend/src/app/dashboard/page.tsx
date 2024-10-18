@@ -14,13 +14,13 @@ export default function Dashboard() {
     <>
       <div>
         <Header/>
-        <h1>Dashboard</h1>
+        <h1 className=' text-center mb-14'>Dashboard</h1>
         <UsersDashboard />
         <CompaniesDashboard />
         <AdvertisementDashboard />
         <ApplicationsDashboard />
         <PeopleDashboard />
-        <Footer />
+        <div className='mt-32'>< Footer/></div>
       </div>
     </>
   );

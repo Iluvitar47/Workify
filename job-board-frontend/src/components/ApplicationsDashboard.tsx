@@ -189,10 +189,10 @@ const ApplicationsDashboard: React.FC = () => {
 
   const renderApplicationsTable = () => {
     return (
-      <div className="flex justify-center items-center flex-col min-h-screen bg-gray-100">
-        <h2 className="text-2xl font-bold mb-6 text-center">Applications</h2>
+      <div className="flex justify-center items-center flex-col">
+        <h2 className="mt-12 mb-6 text-center text-info">Applications</h2>
         <div className="mb-4">
-          <table className="table-auto">
+          <table >
             <thead>
               <tr>
                 <th className="px-4 py-2">Id</th>

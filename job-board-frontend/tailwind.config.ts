@@ -14,6 +14,8 @@ const config: Config = {
       dark: '#060B0F',
       interact: '#F5C800',
       info: '#E71D36',
+      alert_info: '#ff1100',
+      success: '#15b500',
     },
     fontFamily: {
       sans: ['Poppins', 'sans-serif'],
