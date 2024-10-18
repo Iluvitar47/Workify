@@ -196,7 +196,6 @@ const ApplicationsDashboard: React.FC = () => {
             <thead>
               <tr>
                 <th className="px-4 py-2">Id</th>
-                <th className="px-4 py-2">Message</th>
                 <th className="px-4 py-2">People ID</th>
                 <th className="px-4 py-2">Advertisement ID</th>
                 <th className="px-4 py-2">Created at</th>
@@ -207,7 +206,6 @@ const ApplicationsDashboard: React.FC = () => {
               {applications.map((application, index) => (
                 <tr key={index}>
                   <td className="border-t border-b border-x-dark px-4 py-2">{application.id}</td>
-                  <td className="border-t border-b border-x-dark px-4 py-2">{application.message}</td>
                   <td className="border-t border-b border-x-dark px-4 py-2">{application.people_id}</td>
                   <td className="border-t border-b border-x-dark px-4 py-2">{application.advertisement_id}</td>
                   <td className="border-t border-b border-x-dark px-4 py-2">{application.created_at}</td>
