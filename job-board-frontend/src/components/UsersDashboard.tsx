@@ -224,6 +224,7 @@ const UsersComponents: React.FC = () => {
               {showModal && 
                 <Modal onClose={() => setShowModal(false)}>
                   <div className="flex justify-center items-center min-h-screen bg-gray-100">
+                    
                     <form onSubmit={handleSubmit} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
                       <h2 className="text-2xl font-bold mb-6 text-center">Edit Application</h2>
                       {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
