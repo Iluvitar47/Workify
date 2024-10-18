@@ -90,7 +90,7 @@ const SignUpUserComponent: React.FC = () => {
           >
             Submit
           </button>
-          {error && <p className="text-info text-center mt-4">{error}</p>}
+          {error && <p className="text-alert_info text-center mt-4">{error}</p>}
         </form>
       </div>
     );

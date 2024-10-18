@@ -134,8 +134,8 @@ const ProfilePersonalInformationComponent: React.FC = () => {
       <div className="flex justify-center bg-ligth dark:bg-dark pt-16 pb-36 w-full lg:w-1/2">
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm add-card">
           <h3 className="text-1xl font-bold mb-4 text-center">Personal Informations</h3>
-          {successMessage && <p className="text-info text-center mb-4">{successMessage}</p>}
-          {error && <p className="text-info text-center mb-4">{error}</p>}
+          {successMessage && <p className="text-success text-center mb-4">{successMessage}</p>}
+          {error && <p className="text-alert_info text-center mb-4">{error}</p>}
           <div className="mb-4">
             <label className="block text-fullblack dark:text-fullwhite">First Name:</label>
             <input
@@ -240,7 +240,7 @@ const ProfilePersonalInformationComponent: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="w-full button transition-colors hover:underline hover:text-info hover:bg-interact text-fullblack dark:text-fullwhite flex justify-center text-sm p-2 mt-6 "
+            className="w-full button transition-colors hover:underline hover:text-alert_info hover:bg-interact text-fullblack dark:text-fullwhite flex justify-center text-sm p-2 mt-6 "
           >
             Save Changes
           </button>
