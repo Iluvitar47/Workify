@@ -48,7 +48,7 @@ const LoginComponent: React.FC = () => {
 
   const renderLoginForm = () => {
     return (
-      <div className="flex justify-center items-center pb-32 pt-32 bg-gray-100">
+      <div className="flex justify-center items-center pb-64 pt-64 bg-gray-100">
         <form onSubmit={handleSubmit} className="p-6 rounded-md shadow-md w-full max-w-sm add-card">
           <h2 className="text-2xl mb-6 text-center">Login</h2>
           <div className="mb-4">

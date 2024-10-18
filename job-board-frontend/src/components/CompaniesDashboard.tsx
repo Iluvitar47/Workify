@@ -225,92 +225,92 @@ const CompaniesDashboard: React.FC = () => {
               ))}
               {showModal && 
                 <Modal onClose={() => setShowModal(false)}>
-                  <div className="flex justify-center items-center min-h-screen bg-gray-100">
-                    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
+                  <div className="flex justify-center items-center min-h-screen pt-20">
+                    <form onSubmit={handleSubmit} className="bg-fullwhite p-8 rounded-lg shadow-lg w-full  text-dark max-w-md">
                       <h2 className="text-2xl font-bold mb-6 text-center">Edit Application</h2>
-                      {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
+                      {successMessage && <p className="text-success text-center mb-4 font-medium">{successMessage}</p>}
+                      {error && <p className="text-alert_info text-center mb-4 font-medium">{error}</p>}
                       <div className="mb-4">
-                        <label className="block text-gray-700">ID:</label>
+                        <label className="block text-dark ">ID:</label>
                         <input
-                          type="number"
                           name="id"
                           value={formData.id || ''}
                           disabled
                           onChange={handleChange}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full  text-dark p-3 bg-alert_info  bg-opacity-5 rounded-md mt-1"
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="block text-gray-700">Name:</label>
+                        <label className="block text-dark font-semibold">Name:</label>
                         <textarea
                           name="name"
                           value={formData.name || ''}
                           onChange={handleChange}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full  text-dark p-3 border border-ligth rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="block text-gray-700">Email:</label>
+                        <label className="block text-dark font-semibold">Email:</label>
                         <input
                           type='email'
                           name="email"
                           value={formData.email || ''}
                           onChange={handleChange}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full  text-dark p-3 border border-ligth rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="block text-gray-700">Phone:</label>
+                        <label className="block text-dark font-semibold">Phone:</label>
                         <input
                           type='tel'
                           name="phone"
                           value={formData.phone || ''}
                           onChange={handleChange}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full  text-dark p-3 border border-ligth rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="block text-gray-700">Business sector:</label>
+                        <label className="block text-dark font-semibold">Business sector:</label>
                         <input
                           type='text'
                           name="business_sector"
                           value={formData.business_sector || ''}
                           onChange={handleChange}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full  text-dark p-3 border border-ligth rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="block text-gray-700">Location:</label>
+                        <label className="block text-dark font-semibold">Location:</label>
                         <input
                           type='text'
                           name="location"
                           value={formData.location || ''}
                           onChange={handleChange}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full  text-dark p-3 border border-ligth rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="block text-gray-700">Employees:</label>
+                        <label className="block text-dark font-semibold">Employees:</label>
                         <input
                           type='number'
                           name="employees"
                           value={formData.employees || ''}
                           onChange={handleChange}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full  text-dark p-3 border border-ligth rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="block text-gray-700">Description:</label>
+                        <label className="block text-dark font-semibold">Description:</label>
                         <textarea
                           name="description"
                           value={formData.description || ''}
                           onChange={handleChange}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-96  text-dark p-3 border border-ligth rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                         />
                       </div>
                       <button
                         type="submit"
-                        className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+                        className="bg-interact text-fullblack py-3 px-4 rounded-md font-semibold hover:bg-info hover:text-fullwhite transition-colors"
                       >
                         Save Changes
                       </button>
@@ -324,81 +324,82 @@ const CompaniesDashboard: React.FC = () => {
         <button className="btn" onClick={() => { setShowAddModal(true); }}>Add Company</button>
         {showAddModal && 
             <Modal onClose={() => setShowAddModal(false)}>
-                <div className="flex justify-center items-center min-h-screen bg-gray-100">
-                    <form onSubmit={handleSubmitAdd} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
+                <div className="flex justify-center items-center min-h-screen">
+                    <form onSubmit={handleSubmitAdd} className="bg-fullwhite p-8 rounded-lg shadow-lg w-full  text-dark max-w-md">
                         <h2 className="text-2xl font-bold mb-6 text-center">Add Company</h2>
-                        {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
+                        {successMessage && <p className="text-success text-center mb-4 font-medium">{successMessage}</p>}
+                      {error && <p className="text-alert_info text-center mb-4 font-medium">{error}</p>}
                       <div className="mb-4">
-                        <label className="block text-gray-700">Name:</label>
+                        <label className="block text-dark font-semibold">Name:</label>
                         <textarea
                           name="name"
                           value={formDataAdd.name || ''}
                           onChange={handleChangeAdd}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full  text-dark p-3 border border-ligth rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="block text-gray-700">Email:</label>
+                        <label className="block text-dark font-semibold">Email:</label>
                         <input
                           type='email'
                           name="email"
                           value={formDataAdd.email || ''}
                           onChange={handleChangeAdd}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full  text-dark p-3 border border-ligth rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="block text-gray-700">Phone:</label>
+                        <label className="block text-dark font-semibold">Phone:</label>
                         <input
                           type='tel'
                           name="phone"
                           value={formDataAdd.phone || ''}
                           onChange={handleChangeAdd}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full  text-dark p-3 border border-ligth rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="block text-gray-700">Business sector:</label>
+                        <label className="block text-dark font-semibold">Business sector:</label>
                         <input
                           type='text'
                           name="business_sector"
                           value={formDataAdd.business_sector || ''}
                           onChange={handleChangeAdd}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full  text-dark p-3 border border-ligth rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="block text-gray-700">Location:</label>
+                        <label className="block text-dark font-semibold">Location:</label>
                         <input
                           type='text'
                           name="location"
                           value={formDataAdd.location || ''}
                           onChange={handleChangeAdd}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full  text-dark p-3 border border-ligth rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="block text-gray-700">Employees:</label>
+                        <label className="block text-dark font-semibold">Employees:</label>
                         <input
                           type='number'
                           name="employees"
                           value={formDataAdd.employees || ''}
                           onChange={handleChangeAdd}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full  text-dark p-3 border border-ligth rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="block text-gray-700">Description:</label>
+                        <label className="block text-dark font-semibold">Description:</label>
                         <textarea
                           name="description"
                           value={formDataAdd.description || ''}
                           onChange={handleChangeAdd}
-                          className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-96  text-dark p-3 border border-ligth rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                         />
                       </div>
                         <button
                             type="submit"
-                            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+                            className="bg-interact text-fullblack py-3 px-4 rounded-md font-semibold hover:bg-info hover:text-fullwhite transition-colors"
                         >
                             Add Company
                         </button>
