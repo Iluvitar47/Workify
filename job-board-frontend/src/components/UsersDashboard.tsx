@@ -193,10 +193,10 @@ const UsersComponents: React.FC = () => {
 
   const renderUsersTable = () => {
     return (
-      <div className="flex justify-center items-center flex-col min-h-screen bg-gray-100">
-        <h2 className="text-2xl font-bold mb-6 text-center">Users</h2>
+      <div className="flex justify-center items-center flex-col">
+        <h2 className="text-center mb-4 text-info">Users</h2>
         <div className="mb-4">
-          <table className="table-auto">
+          <table className="table-auto ">
             <thead>
               <tr>
                 <th className="px-4 py-2">ID</th>
@@ -206,14 +206,14 @@ const UsersComponents: React.FC = () => {
                 <th className="px-4 py-2">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className='border-t border-b border-x-dark'>
               {users.map((user, index) => (
                 <tr key={index}>
-                  <td className="border px-4 py-2">{user.id}</td>
-                  <td className="border px-4 py-2">{user.permission}</td>
-                  <td className="border px-4 py-2">{user.email}</td>
-                  <td className="border px-4 py-2">{user.people_id}</td>
-                  <td className="border px-4 py-2">
+                  <td className="border-t border-b border-x-dark  px-4 py-2">{user.id}</td>
+                  <td className="border-t border-b border-x-dark  px-4 py-2">{user.permission}</td>
+                  <td className="border-t border-b border-x-dark  px-4 py-2">{user.email}</td>
+                  <td className="border-t border-b border-x-dark  px-4 py-2">{user.people_id}</td>
+                  <td className="border-t border-b border-x-dark  px-4 py-2">
                     <div className="flex space-x-2">
                       <button className="btn" onClick={() => { setUser(user); setFormData(user); setShowModal(true); }}>modifier</button>
                       <button className="btn" onClick={() => { deleteUser(user.id) }}>supprimer</button>

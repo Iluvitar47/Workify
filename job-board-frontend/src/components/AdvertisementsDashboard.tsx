@@ -186,10 +186,10 @@ const AdvertisementsComponents: React.FC = () => {
 
   const renderAdvertisementsTable = () => {
     return (
-      <div className="flex justify-center items-center flex-col min-h-screen bg-gray-100">
-        <h2 className="text-2xl font-bold mb-6 text-center">Advertisements</h2>
+      <div className="flex justify-center items-center flex-col">
+        <h2 className="mt-12 mb-6 text-center text-info">Advertisements</h2>
         <div className="mb-4">
-          <table className="table-auto">
+          <table >
             <thead>
               <tr>
                 <th className="px-4 py-2">Id</th>
@@ -202,17 +202,17 @@ const AdvertisementsComponents: React.FC = () => {
                 <th className="px-4 py-2">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className='border-t border-b border-x-dark'>
               {advertisements.map((advertisement, index) => (
                 <tr key={index}>
-                  <td className="border px-4 py-2">{advertisement.id}</td>
-                  <td className="border px-4 py-2">{advertisement.title}</td>
-                  <td className="border px-4 py-2">{advertisement.wages}</td>
-                  <td className="border px-4 py-2">{advertisement.location}</td>
-                  <td className="border px-4 py-2">{advertisement.working_times}</td>
-                  <td className="border px-4 py-2">{advertisement.company_id}</td>
-                  <td className="border px-4 py-2">{advertisement.created_at}</td>
-                  <td className="border px-4 py-2">
+                  <td className="border-t border-b border-x-dark px-4 py-2">{advertisement.id}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{advertisement.title}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{advertisement.wages}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{advertisement.location}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{advertisement.working_times}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{advertisement.company_id}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{advertisement.created_at}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">
                     <div className="flex space-x-2">
                       <button className="btn" onClick={() => { setAdvertisement(advertisement); setFormData(advertisement); setShowModal(true); }}>modifier</button>
                       <button className="btn" onClick={() => { deleteAdvertisement(advertisement.id) }}>supprimer</button>

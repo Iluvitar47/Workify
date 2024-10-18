@@ -201,10 +201,10 @@ const ApplicationsDashboard: React.FC = () => {
 
   const renderApplicationsTable = () => {
     return (
-      <div className="flex justify-center items-center flex-col min-h-screen bg-gray-100">
-        <h2 className="text-2xl font-bold mb-6 text-center">Applications</h2>
+      <div className="flex justify-center items-center flex-col">
+        <h2 className="mt-12 mb-6 text-center text-info">Applications</h2>
         <div className="mb-4">
-          <table className="table-auto">
+          <table >
             <thead>
               <tr>
                 <th className="px-4 py-2">Id</th>
@@ -219,13 +219,13 @@ const ApplicationsDashboard: React.FC = () => {
             <tbody>
               {applications.map((application, index) => (
                 <tr key={index}>
-                  <td className="border px-4 py-2">{application.id}</td>
-                  <td className="border px-4 py-2">{application.isRead}</td>
-                  <td className="border px-4 py-2">{application.message}</td>
-                  <td className="border px-4 py-2">{application.people_id}</td>
-                  <td className="border px-4 py-2">{application.advertisement_id}</td>
-                  <td className="border px-4 py-2">{application.created_at}</td>
-                  <td className="border px-4 py-2">
+                  <td className="border-t border-b border-x-dark px-4 py-2">{application.id}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{application.isRead}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{application.message}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{application.people_id}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{application.advertisement_id}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">{application.created_at}</td>
+                  <td className="border-t border-b border-x-dark px-4 py-2">
                     <div className="flex space-x-2">
                       <button className="btn" onClick={() => { setApplication(application); setFormData(application); setShowModal(true); }}>modifier</button>
                       <button className="btn" onClick={() => { deleteApplication(application.id) }}>supprimer</button>
