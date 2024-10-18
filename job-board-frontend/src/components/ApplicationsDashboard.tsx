@@ -148,22 +148,10 @@ const ApplicationsDashboard: React.FC = () => {
       }
   
       const requestBody = {
-        isRead: formDataAdd.isRead,
         message: formDataAdd.message,
         people_id: formDataAdd.people_id,
         advertisement_id: formDataAdd.advertisement_id
       };
-
-      if (requestBody.isRead !== "true" && requestBody.isRead !== "false") {
-        throw new Error('Must be true or false');
-      } else {
-        if (requestBody.isRead === "true") {
-          requestBody.isRead = true;
-        }
-        if (requestBody.isRead === "false") {
-          requestBody.isRead = false;
-        }
-      }
   
       const response = await fetch(`${applciationsRoute}`, {
         method: 'POST',
@@ -209,8 +197,8 @@ const ApplicationsDashboard: React.FC = () => {
               <tr>
                 <th className="px-4 py-2">Id</th>
                 <th className="px-4 py-2">Message</th>
-                <th className="px-4 py-2">User</th>
-                <th className="px-4 py-2">Advertisement</th>
+                <th className="px-4 py-2">People ID</th>
+                <th className="px-4 py-2">Advertisement ID</th>
                 <th className="px-4 py-2">Created at</th>
                 <th className="px-4 py-2">Actions</th>
               </tr>

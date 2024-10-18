@@ -27,11 +27,11 @@ class ApplicationModel {
         return result[0];
     }
 
-    create = async ({ isRead, message, people_id, advertisement_id }) => {
+    create = async ({ message, people_id, advertisement_id }) => {
         const sql = `INSERT INTO ${this.tableName}
-        (isRead, message, people_id, advertisement_id) VALUES (?,?,?,?)`;
+        (message, people_id, advertisement_id) VALUES (?,?,?)`;
         
-        const result = await query(sql, [isRead, message, people_id, advertisement_id]);  
+        const result = await query(sql, [message, people_id, advertisement_id]);  
         const affectedRows = result ? result.affectedRows : 0;
         
         return affectedRows;

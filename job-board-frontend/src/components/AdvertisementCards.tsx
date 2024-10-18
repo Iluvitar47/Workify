@@ -3,11 +3,18 @@
 import React, { useState, useEffect } from 'react';
 import type { Company } from '../models/companies.model';
 import type { Advertisement } from '../models/advertisements.model';
+import type { People } from '../models/people.model';
+import Modal from './ModalsDashboard';
+import { Email } from '@/models/email.model';
 
 const AdvertisementCards: React.FC = () => {
   const [advertisements, setAdvertisements] = useState<Advertisement[]>([]);
   const [expandedIds, setExpandedIds] = useState<number[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [formData, setFormData] = useState<Partial<People>>({});
+  const [token, setToken] = useState<string | null>(null);
   const urlApi = process.env.NEXT_PUBLIC_URL_API;
 
   // Fetch advertisements
@@ -81,6 +88,206 @@ const AdvertisementCards: React.FC = () => {
     }
   }, [advertisements]);
 
+  useEffect(() => {
+    setToken(localStorage.getItem('token'));
+  }, []);
+
+  const handleSubmitNotLogin = (id: number) => async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const requestBody = {
+        firstname: formData.firstname,
+        lastname: formData.lastname,
+        email: formData.email,
+        phone: formData.phone,
+        experiences: formData.experiences,
+        studies: formData.studies,
+        skills: formData.skills,
+        business_sector: formData.business_sector,
+        target_job: formData.target_job,
+        location: formData.location,
+      };
+
+      const responsePeople = await fetch(`${urlApi}/people`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!responsePeople.ok) {
+        throw new Error('Failed to create people');
+      }
+
+      const dataPeople = await responsePeople.json();
+
+      const getCompanyEmail = advertisements.find((ad) => ad.id === id)?.company_id;
+      console.log('getCompanyEmail', getCompanyEmail);
+
+      const emailMessage: Email = {
+        emailReceiver: getCompanyEmail !== undefined ? String(companies[getCompanyEmail]?.email) : '',
+        emailSender: String(formData.email),
+        subject: `Candidature de ${formData.firstname} ${formData.lastname} pour le poste de ${formData.target_job}`,
+        message: `Bonjour, je m'appelle ${formData.firstname} ${formData.lastname} et je vous envoie ma candidature pour le poste de ${formData.target_job} que vous avez posté.
+          
+          Voici mes informations:
+            - Email: ${formData.email}
+            - Téléphone: ${formData.phone}
+            - Expériences: ${formData.experiences}
+            - Etudes: ${formData.studies}
+            - Compétences: ${formData.skills}
+            - Secteur d'activité: ${formData.business_sector}
+            - Poste ciblé: ${formData.target_job}
+            - Lieu: ${formData.location}
+        `
+      };
+
+      console.log('emailReceiver', emailMessage.emailReceiver);
+
+      const requestBodyApply = {
+        message: emailMessage.message,
+        advertisement_id: id,
+        people_id: dataPeople.people.id,
+      }
+
+      const responseApply = await fetch(`${urlApi}/applications`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBodyApply),
+      });
+
+      if (!responseApply.ok) {
+        throw new Error('Failed to creae application');
+      }
+  
+      if (responseApply.status === 202) {
+        setSuccessMessage('You successfully applied to the job!');
+      } else {
+        setSuccessMessage('You successfully applied to the job!');
+        await fetch(`${urlApi}/emails/send-email`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(emailMessage),
+        });
+    }
+    } catch (err) {
+      setError((err as Error).message);
+    }
+  };
+
+  const handleSubmitLogin = (id: number) => async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const responseCurrent = await fetch(`${urlApi}/users/current`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      const dataCurrent = await responseCurrent.json();
+      console.log('dataCurrent', dataCurrent);
+      const peopleCurrentId = dataCurrent.people_id;
+      console.log('peopleCurrentId', peopleCurrentId);
+
+      const responsePeople = await fetch(`${urlApi}/people/id/${peopleCurrentId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      const dataPeople = await responsePeople.json();
+      console.log('dataPeople', dataPeople);
+
+      const requestBody = {
+        firstname: dataPeople.firstname,
+        lastname: dataPeople.lastname,
+        email: dataPeople.email,
+        phone: dataPeople.phone,
+        experiences: dataPeople.experiences,
+        studies: dataPeople.studies,
+        skills: dataPeople.skills,
+        business_sector: dataPeople.business_sector,
+        target_job: dataPeople.target_job,
+        location: dataPeople.location,
+      }
+
+      console.log('requestBody', requestBody);
+
+      const getCompanyEmail = advertisements.find((ad) => ad.id === id)?.company_id;
+      console.log('getCompanyEmail', getCompanyEmail);
+
+      const emailMessage: Email = {
+        emailReceiver: getCompanyEmail !== undefined ? String(companies[getCompanyEmail]?.email) : '',
+        emailSender: String(requestBody.email),
+        subject: `Candidature de ${requestBody.firstname} ${requestBody.lastname} pour le poste de ${requestBody.target_job}`,
+        message: `Bonjour, je m'appelle ${requestBody.firstname} ${requestBody.lastname} et je vous envoie ma candidature pour le poste de ${requestBody.target_job} que vous avez posté.
+          
+          Voici mes informations:
+            - Email: ${requestBody.email}
+            - Téléphone: ${requestBody.phone}
+            - Expériences: ${requestBody.experiences}
+            - Etudes: ${requestBody.studies}
+            - Compétences: ${requestBody.skills}
+            - Secteur d'activité: ${requestBody.business_sector}
+            - Poste ciblé: ${requestBody.target_job}
+            - Lieu: ${requestBody.location}
+        `
+      };
+
+      console.log('emailReceiver', emailMessage.emailReceiver);
+
+      const requestBodyApply = {
+        message: emailMessage.message,
+        advertisement_id: id,
+        people_id: dataPeople.id,
+      }
+
+      const responseApply = await fetch(`${urlApi}/applications`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBodyApply),
+      });
+
+      if (!responseApply.ok) {
+        throw new Error('Failed to creae application');
+      }
+  
+      if (responseApply.status === 202) {
+        setSuccessMessage('You successfully applied to the job!');
+      } else {
+        setSuccessMessage('You successfully applied to the job!');
+        await fetch(`${urlApi}/emails/send-email`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(emailMessage),
+        });
+    }
+    } catch (err) {
+      setError((err as Error).message);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   const renderAdvertisementsWithCompanies = (ads: Advertisement[]) => {
     return (
       <div className="grid grid-flow-row grid-cols-1 pt-20 pb-64">
@@ -107,10 +314,139 @@ const AdvertisementCards: React.FC = () => {
                 </p>
                 <div className='absolute'>
                 <button
+                  onClick={() => { setShowModal(true); }}
                   className="button button transition-colors hover:underline hover:text-info hover:bg-interact text-fullblack dark:text-fullwhite flex items-center justify-center text-sm p-2 mt-6 col-span-2">
                   Postuler
-                  </button>
-    
+                </button>
+                {showModal && 
+                  <Modal onClose={() => setShowModal(false)}>
+                    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
+                      <h2 className="text-2xl font-bold mb-6 text-center">Apply</h2>
+                      {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
+                      {!token ? (
+                        <form onSubmit={handleSubmitNotLogin(ad.id)} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
+                          <div className="mb-4">
+                            <label className="block text-gray-700">Firstname:</label>
+                            <input
+                              type='text'
+                              name="firstname"
+                              value={formData.firstname || ''}
+                              onChange={handleChange}
+                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
+                          <div className="mb-4">
+                            <label className="block text-gray-700">Lastname:</label>
+                            <input
+                              type='text'
+                              name="lastname"
+                              value={formData.lastname || ''}
+                              onChange={handleChange}
+                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
+                          <div className="mb-4">
+                            <label className="block text-gray-700">Email:</label>
+                            <input
+                              type='email'
+                              name="email"
+                              value={formData.email || ''}
+                              onChange={handleChange}
+                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
+                          <div className="mb-4">
+                            <label className="block text-gray-700">Phone:</label>
+                            <input
+                              type='tel'
+                              name="phone"
+                              value={formData.phone || ''}
+                              onChange={handleChange}
+                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
+                          <div className="mb-4">
+                            <label className="block text-gray-700">Experiences:</label>
+                            <input
+                              type='text'
+                              name="experiences"
+                              value={formData.experiences || ''}
+                              onChange={handleChange}
+                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
+                          <div className="mb-4">
+                            <label className="block text-gray-700">Studies:</label>
+                            <input
+                              type='text'
+                              name="studies"
+                              value={formData.studies || ''}
+                              onChange={handleChange}
+                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
+                          <div className="mb-4">
+                            <label className="block text-gray-700">Skills:</label>
+                            <input
+                              type='text'
+                              name="skills"
+                              value={formData.skills || ''}
+                              onChange={handleChange}
+                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
+                          <div className="mb-4">
+                            <label className="block text-gray-700">Business sector:</label>
+                            <input
+                              type='text'
+                              name="business_sector"
+                              value={formData.business_sector || ''}
+                              onChange={handleChange}
+                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
+                          <div className="mb-4">
+                            <label className="block text-gray-700">Target job:</label>
+                            <input
+                              type='text'
+                              name="target_job"
+                              value={formData.target_job || ''}
+                              onChange={handleChange}
+                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
+                          <div className="mb-4">
+                            <label className="block text-gray-700">Location:</label>
+                            <input
+                              type='text'
+                              name="location"
+                              value={formData.location || ''}
+                              onChange={handleChange}
+                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
+                          <button
+                            type="submit"
+                            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+                          >
+                            Apply
+                          </button>
+                        </form>
+                      ) : (
+                        <form onSubmit={handleSubmitLogin(ad.id)} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
+                          <p>Vous êtes connecté, vous pouvez postuler à cette offre directement, vos informations personnelles transmises seront envoyés au destinataire de l&apos;offre.</p>
+
+                          <button                            
+                            type="submit"
+                            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+                          >
+                            Apply
+                          </button>
+                        </form>
+                      )}
+                    </div>
+                  </Modal>
+                }
                 </div>
               </>
             ) : (

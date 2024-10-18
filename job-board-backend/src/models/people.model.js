@@ -36,11 +36,11 @@ class PeopleModel {
         return result;
     }
 
-    searchAfterCreated = async ({ firstname, lastname, phone }) => {
+    searchAfterCreated = async ({ firstname, lastname, phone, email }) => {
         const sql = `SELECT * FROM ${this.tableName}
-        WHERE firstname = ? AND lastname = ? AND phone = ?`;
+        WHERE firstname = ? AND lastname = ? AND phone = ? AND email = ?`;
     
-        const result = await query(sql, [firstname, lastname, phone]);  
+        const result = await query(sql, [firstname, lastname, phone, email]);  
         
         return result;
     }

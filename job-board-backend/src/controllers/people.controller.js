@@ -42,7 +42,7 @@ class PeopleController {
             throw new HttpException(500, 'Something went wrong');
         }
     
-        const searchResult = await PeopleModel.searchAfterCreated({ firstname: req.body.firstname, lastname: req.body.lastname, phone: req.body.phone });
+        const searchResult = await PeopleModel.searchAfterCreated({ firstname: req.body.firstname, lastname: req.body.lastname, phone: req.body.phone, email: req.body.email });
         
         if (!searchResult) {
             throw new HttpException(409, 'People doesn\'t exist');
