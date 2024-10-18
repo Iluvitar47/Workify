@@ -25,7 +25,7 @@ CREATE TABLE `users`(
     `email` VARCHAR(255) NOT NULL UNIQUE,
     `people_id` INT,
     PRIMARY KEY (`id`),
-    CONSTRAINT `user_people_id_foreign` FOREIGN KEY(`people_id`) REFERENCES `people`(`id`) ON DELETE CASCADE
+    CONSTRAINT `user_people_id_foreign` FOREIGN KEY(`people_id`) REFERENCES `people`(`id`)
 );
 
 CREATE TABLE `companies`(
@@ -55,7 +55,6 @@ CREATE TABLE `advertisements`(
 
 CREATE TABLE `applications`(
     `id` INT NOT NULL AUTO_INCREMENT,
-    `isRead` BOOLEAN NOT NULL,
     `message` TEXT NOT NULL,
     `people_id` INT NOT NULL,
     `advertisement_id` INT NOT NULL,

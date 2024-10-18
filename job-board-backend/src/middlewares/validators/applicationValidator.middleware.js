@@ -1,11 +1,6 @@
 const { body } = require('express-validator');
 
 exports.createApplicationSchema = [
-    body('isRead')
-        .exists()
-        .withMessage('isRead is required')
-        .isBoolean()
-        .withMessage('isRead must be a boolean'),
     body('message')
         .exists()
         .withMessage('Message is required')
@@ -24,10 +19,6 @@ exports.createApplicationSchema = [
 ]
 
 exports.updateApplicationSchema = [
-    body('isRead')
-        .optional()
-        .isBoolean()
-        .withMessage('isRead must be a boolean'),
     body('message')
         .optional()
         .isString()

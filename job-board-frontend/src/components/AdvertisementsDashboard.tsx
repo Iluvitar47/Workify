@@ -197,7 +197,7 @@ const AdvertisementsComponents: React.FC = () => {
                 <th className="px-4 py-2">Wages</th>
                 <th className="px-4 py-2">Location</th>
                 <th className="px-4 py-2">Working times</th>
-                <th className="px-4 py-2">Company</th>
+                <th className="px-4 py-2">Company ID</th>
                 <th className="px-4 py-2">Created at</th>
                 <th className="px-4 py-2">Actions</th>
               </tr>

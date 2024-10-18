@@ -8,6 +8,7 @@ const userRouter = require('./routes/user.route');
 const companyRouter = require('./routes/company.route');
 const advertisementRouter = require('./routes/advertisement.route');
 const applicationRouter = require('./routes/application.route');
+const emailRouter = require('./routes/email.route');
 
 // Init express
 const app = express();
@@ -33,6 +34,7 @@ app.use(`/api/v1/people`, peopleRouter);
 app.use(`/api/v1/companies`, companyRouter);
 app.use(`/api/v1/advertisements`, advertisementRouter);
 app.use(`/api/v1/applications`, applicationRouter);
+app.use(`/api/v1/emails`, emailRouter);
 
 
 // 404 error

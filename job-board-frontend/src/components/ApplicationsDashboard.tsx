@@ -148,22 +148,10 @@ const ApplicationsDashboard: React.FC = () => {
       }
   
       const requestBody = {
-        isRead: formDataAdd.isRead,
         message: formDataAdd.message,
         people_id: formDataAdd.people_id,
         advertisement_id: formDataAdd.advertisement_id
       };
-
-      if (requestBody.isRead !== "true" && requestBody.isRead !== "false") {
-        throw new Error('Must be true or false');
-      } else {
-        if (requestBody.isRead === "true") {
-          requestBody.isRead = true;
-        }
-        if (requestBody.isRead === "false") {
-          requestBody.isRead = false;
-        }
-      }
   
       const response = await fetch(`${applciationsRoute}`, {
         method: 'POST',
@@ -210,8 +198,8 @@ const ApplicationsDashboard: React.FC = () => {
                 <th className="px-4 py-2">Id</th>
                 <th className="px-4 py-2">Read</th>
                 <th className="px-4 py-2">Message</th>
-                <th className="px-4 py-2">User</th>
-                <th className="px-4 py-2">Advertisement</th>
+                <th className="px-4 py-2">People ID</th>
+                <th className="px-4 py-2">Advertisement ID</th>
                 <th className="px-4 py-2">Created at</th>
                 <th className="px-4 py-2">Actions</th>
               </tr>
@@ -220,7 +208,6 @@ const ApplicationsDashboard: React.FC = () => {
               {applications.map((application, index) => (
                 <tr key={index}>
                   <td className="border px-4 py-2">{application.id}</td>
-                  <td className="border px-4 py-2">{application.isRead}</td>
                   <td className="border px-4 py-2">{application.message}</td>
                   <td className="border px-4 py-2">{application.people_id}</td>
                   <td className="border px-4 py-2">{application.advertisement_id}</td>
@@ -301,16 +288,6 @@ const ApplicationsDashboard: React.FC = () => {
                     <form onSubmit={handleSubmitAdd} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
                         <h2 className="text-2xl font-bold mb-6 text-center">Add Application</h2>
                         {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
-                        <div className="mb-4">
-                          <label className="block text-gray-700">Read:</label>
-                          <input
-                            type='text'
-                            name="isRead"
-                            value={formDataAdd.isRead?.toString() || ''}
-                            onChange={handleChangeAdd}
-                            className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          />
-                        </div>
                         <div className="mb-4">
                           <label className="block text-gray-700">Message:</label>
                           <textarea
