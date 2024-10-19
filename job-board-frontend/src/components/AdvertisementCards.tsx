@@ -66,6 +66,7 @@ const AdvertisementCards: React.FC = () => {
       const data = await response.json();
       return data as Company;
     } catch (err) {
+      setError((err as Error).message);
       return null;
     }
   };
