@@ -315,119 +315,118 @@ const AdvertisementCards: React.FC = () => {
                 <div className='absolute'>
                 <button
                   onClick={() => { setShowModal(true); }}
-                  className="button button transition-colors hover:underline hover:text-info hover:bg-interact text-fullblack dark:text-fullwhite flex items-center justify-center text-sm p-2 mt-6 col-span-2">
+                  className="button transition-colors hover:underline hover:text-info hover:bg-interact text-fullblack dark:text-fullwhite flex items-center justify-center text-sm p-2 mt-6 col-span-2">
                   Postuler
                 </button>
                 {showModal && 
                   <Modal onClose={() => setShowModal(false)}>
-                    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
-                      <h2 className="text-2xl font-bold mb-6 text-center">Apply</h2>
+                    <div className="flex justify-center items-center min-h-screen">
                       {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
                       {!token ? (
-                        <form onSubmit={handleSubmitNotLogin(ad.id)} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
+                        <form onSubmit={handleSubmitNotLogin(ad.id)} className="bg-fullwhite p-8 rounded-lg shadow-lg w-full  text-dark max-w-md mt-96">
                           <div className="mb-4">
-                            <label className="block text-gray-700">Firstname:</label>
+                            <label className="block text-dark font-semibold">Firstname:</label>
                             <input
                               type='text'
                               name="firstname"
                               value={formData.firstname || ''}
                               onChange={handleChange}
-                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full sm:w-96   text-dark p-3 border border-interact border-opacity-55 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact "
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-gray-700">Lastname:</label>
+                            <label className="block text-dark font-semibold">Lastname:</label>
                             <input
                               type='text'
                               name="lastname"
                               value={formData.lastname || ''}
                               onChange={handleChange}
-                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full   text-dark p-3 border border-interact border-opacity-55 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-gray-700">Email:</label>
+                            <label className="block text-dark font-semibold">Email:</label>
                             <input
                               type='email'
                               name="email"
                               value={formData.email || ''}
                               onChange={handleChange}
-                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full   text-dark p-3 border border-interact border-opacity-55 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-gray-700">Phone:</label>
+                            <label className="block text-dark font-semibold">Phone:</label>
                             <input
                               type='tel'
                               name="phone"
                               value={formData.phone || ''}
                               onChange={handleChange}
-                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full   text-dark p-3 border border-interact border-opacity-55 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-gray-700">Experiences:</label>
+                            <label className="block text-dark font-semibold">Experiences:</label>
                             <input
                               type='text'
                               name="experiences"
                               value={formData.experiences || ''}
                               onChange={handleChange}
-                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full   text-dark p-3 border border-interact border-opacity-55 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-gray-700">Studies:</label>
+                            <label className="block text-dark font-semibold">Studies:</label>
                             <input
                               type='text'
                               name="studies"
                               value={formData.studies || ''}
                               onChange={handleChange}
-                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full   text-dark p-3 border border-interact border-opacity-55 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-gray-700">Skills:</label>
+                            <label className="block text-dark font-semibold">Skills:</label>
                             <input
                               type='text'
                               name="skills"
                               value={formData.skills || ''}
                               onChange={handleChange}
-                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full   text-dark p-3 border border-interact border-opacity-55 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-gray-700">Business sector:</label>
+                            <label className="block text-dark font-semibold">Business sector:</label>
                             <input
                               type='text'
                               name="business_sector"
                               value={formData.business_sector || ''}
                               onChange={handleChange}
-                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full   text-dark p-3 border border-interact border-opacity-55 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-gray-700">Target job:</label>
+                            <label className="block text-dark font-semibold">Target job:</label>
                             <input
                               type='text'
                               name="target_job"
                               value={formData.target_job || ''}
                               onChange={handleChange}
-                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full   text-dark p-3 border border-interact border-opacity-55 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-gray-700">Location:</label>
+                            <label className="block text-dark font-semibold">Location:</label>
                             <input
                               type='text'
                               name="location"
                               value={formData.location || ''}
                               onChange={handleChange}
-                              className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full   text-dark p-3 border border-interact border-opacity-55 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-interact"
                             />
                           </div>
                           <button
                             type="submit"
-                            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+                            className="button  rounded h-10 transition-colors hover:underline hover:text-info hover:bg-interact text-fullblack dark:text-fullwhite w-full"
                           >
                             Apply
                           </button>
