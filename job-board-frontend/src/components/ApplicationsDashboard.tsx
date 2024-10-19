@@ -91,11 +91,11 @@ const ApplicationsDashboard: React.FC = () => {
       }
   
       if (response.status === 202) {
-        setSuccessMessage('Application updated successfully!');
+        setSuccessMessage('Candidature modifiée avec succès!');
       } else {
         const updatedApplication = await response.json();
         setApplication(updatedApplication);
-        setSuccessMessage('Application updated successfully!');
+        setSuccessMessage('Candidature modifiée avec succès!');
 
         useEffect(() => {
           const interval = setInterval(() => {
@@ -167,9 +167,9 @@ const ApplicationsDashboard: React.FC = () => {
       }
   
       if (response.status === 202) {
-        setSuccessMessage('Application updated successfully!');
+        setSuccessMessage('Candidature modifiée avec succès!');
       } else {
-        setSuccessMessage('Application updated successfully!');
+        setSuccessMessage('Candidature modifiée avec succès!');
       }
 
       setRefresh(!refresh);

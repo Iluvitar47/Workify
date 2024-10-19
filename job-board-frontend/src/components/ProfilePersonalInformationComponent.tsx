@@ -113,11 +113,11 @@ const ProfilePersonalInformationComponent: React.FC = () => {
       }
 
       if (response.status === 202) {
-        setSuccessMessage('Profile updated successfully!');
+        setSuccessMessage('Profil modifié avec succès!');
       } else {
         const updatedPeople = await response.json();
         setPeople(updatedPeople);
-        setSuccessMessage('Profile updated successfully!');
+        setSuccessMessage('Profil modifié avec succès!');
       }
     } catch (err) {
       setError((err as Error).message);

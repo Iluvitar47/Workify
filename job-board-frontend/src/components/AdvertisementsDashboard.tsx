@@ -94,11 +94,11 @@ const AdvertisementsComponents: React.FC = () => {
       }
   
       if (response.status === 202) {
-        setSuccessMessage('Advertisement updated successfully!');
+        setSuccessMessage('L\'offre a été modifiée avec succès!');
       } else {
         const updatedAdvertisement = await response.json();
         setAdvertisement(updatedAdvertisement);
-        setSuccessMessage('Advertisement updated successfully!');
+        setSuccessMessage('L\'offre a été modifiée avec succès!');
       }
       setRefresh(!refresh);
     } catch (err) {
@@ -165,9 +165,9 @@ const AdvertisementsComponents: React.FC = () => {
       }
   
       if (response.status === 202) {
-        setSuccessMessage('Advertisement updated successfully!');
+        setSuccessMessage('L\'offre a été modifiée avec succès!');
       } else {
-        setSuccessMessage('Advertisement updated successfully!');
+        setSuccessMessage('L\'offre a été modifiée avec succès!');
       }
 
         setRefresh(!refresh);

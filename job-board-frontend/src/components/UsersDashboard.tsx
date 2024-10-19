@@ -94,11 +94,11 @@ const UsersComponents: React.FC = () => {
       }
 
       if (response.status === 202) {
-        setSuccessMessage('User updated successfully!');
+        setSuccessMessage('Utilisateur mis à jour!');
       } else {
         const updatedUser = await response.json();
         setUser(updatedUser);
-        setSuccessMessage('User updated successfully!');
+        setSuccessMessage('Utilisateur mis à jour!');
       }
       setRefresh(!refresh);
     } catch (err) {
@@ -171,7 +171,7 @@ const UsersComponents: React.FC = () => {
       }
 
       if (response.status === 202) {
-        setSuccessMessage('User updated successfully!');
+        setSuccessMessage('Utilisateur mis à jour!');
       }
 
       setRefresh(!refresh);

@@ -99,11 +99,11 @@ const PeopleComponents: React.FC = () => {
       }
   
       if (response.status === 202) {
-        setSuccessMessage('People updated successfully!');
+        setSuccessMessage('Personne mis à jour!');
       } else {
         const updatedPeople = await response.json();
         setPeople(updatedPeople);
-        setSuccessMessage('People updated successfully!');
+        setSuccessMessage('Personne mis à jour!');
       }
       setRefresh(!refresh);
     } catch (err) {
@@ -174,9 +174,9 @@ const PeopleComponents: React.FC = () => {
       }
   
       if (response.status === 202) {
-        setSuccessMessage('People updated successfully!');
+        setSuccessMessage('Personne mis à jour!');
       } else {
-        setSuccessMessage('People updated successfully!');
+        setSuccessMessage('Personne mis à jour!');
       }
 
         setRefresh(!refresh);

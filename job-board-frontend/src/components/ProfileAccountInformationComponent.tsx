@@ -87,11 +87,11 @@ const ProfileAccountInformationComponent: React.FC = () => {
       }
 
       if (response.status === 202) {
-        setSuccessMessage('Profile updated successfully!');
+        setSuccessMessage('Compte modifié avec succès!');
       } else {
         const updatedUser = await response.json();
         setUser(updatedUser);
-        setSuccessMessage('Profile updated successfully!');
+        setSuccessMessage('Compte modifié avec succès!');
       }
     } catch (err) {
       setError((err as Error).message);

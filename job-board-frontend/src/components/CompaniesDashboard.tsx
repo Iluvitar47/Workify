@@ -94,11 +94,11 @@ const CompaniesDashboard: React.FC = () => {
       }
 
       if (response.status === 202) {
-        setSuccessMessage('Company updated successfully!');
+        setSuccessMessage('Entreprise ajoutée!');
       } else {
         const updatedCompany = await response.json();
         setCompany(updatedCompany);
-        setSuccessMessage('Company updated successfully!');
+        setSuccessMessage('Entreprise ajoutée!');
       }
 
       setRefresh(!refresh);
@@ -167,9 +167,9 @@ const CompaniesDashboard: React.FC = () => {
       }
   
       if (response.status === 202) {
-        setSuccessMessage('User updated successfully!');
+        setSuccessMessage('Utilisateur mis à jour!');
       } else {
-        setSuccessMessage('User updated successfully!');
+        setSuccessMessage('Utilisateur mis à jour!');
       }
 
       setRefresh(!refresh);

@@ -161,9 +161,9 @@ const AdvertisementCards: React.FC = () => {
       }
   
       if (responseApply.status === 202) {
-        setSuccessMessage('You successfully applied to the job!');
+        setSuccessMessage('Vous avez postulé avec succès!');
       } else {
-        setSuccessMessage('You successfully applied to the job!');
+        setSuccessMessage('Vous avez postulé avec succès!');
         await fetch(`${urlApi}/emails/send-email`, {
           method: 'POST',
           headers: {
@@ -253,9 +253,9 @@ const AdvertisementCards: React.FC = () => {
       }
   
       if (responseApply.status === 202) {
-        setSuccessMessage('You successfully applied to the job!');
+        setSuccessMessage('Vous avez postulé avec succès!');
       } else {
-        setSuccessMessage('You successfully applied to the job!');
+        setSuccessMessage('Vous avez postulé avec succès!');
         await fetch(`${urlApi}/emails/send-email`, {
           method: 'POST',
           headers: {
@@ -310,11 +310,11 @@ const AdvertisementCards: React.FC = () => {
                 {showModal && 
                   <Modal onClose={() => setShowModal(false)}>
                     <div className="flex justify-center items-center min-h-screen">
-                      {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
                       {!token ? (
                         <form onSubmit={handleSubmitNotLogin(ad.id)} className="bg-fullwhite p-8 rounded-lg shadow-lg w-full  text-dark max-w-md mt-96">
+                          {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
                           <div className="mb-4">
-                            <label className="block text-dark font-semibold">Firstname:</label>
+                            <label className="block text-dark font-semibold">Prénom:</label>
                             <input
                               type='text'
                               name="firstname"
@@ -324,7 +324,7 @@ const AdvertisementCards: React.FC = () => {
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-dark font-semibold">Lastname:</label>
+                            <label className="block text-dark font-semibold">Nom:</label>
                             <input
                               type='text'
                               name="lastname"
@@ -344,7 +344,7 @@ const AdvertisementCards: React.FC = () => {
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-dark font-semibold">Phone:</label>
+                            <label className="block text-dark font-semibold">Téléphone:</label>
                             <input
                               type='tel'
                               name="phone"
@@ -354,7 +354,7 @@ const AdvertisementCards: React.FC = () => {
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-dark font-semibold">Experiences:</label>
+                            <label className="block text-dark font-semibold">Expériences:</label>
                             <input
                               type='text'
                               name="experiences"
@@ -364,7 +364,7 @@ const AdvertisementCards: React.FC = () => {
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-dark font-semibold">Studies:</label>
+                            <label className="block text-dark font-semibold">Formations/Etudes:</label>
                             <input
                               type='text'
                               name="studies"
@@ -374,7 +374,7 @@ const AdvertisementCards: React.FC = () => {
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-dark font-semibold">Skills:</label>
+                            <label className="block text-dark font-semibold">Compétences:</label>
                             <input
                               type='text'
                               name="skills"
@@ -384,7 +384,7 @@ const AdvertisementCards: React.FC = () => {
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-dark font-semibold">Business sector:</label>
+                            <label className="block text-dark font-semibold">Secteur d&apos;activité:</label>
                             <input
                               type='text'
                               name="business_sector"
@@ -394,7 +394,7 @@ const AdvertisementCards: React.FC = () => {
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-dark font-semibold">Target job:</label>
+                            <label className="block text-dark font-semibold">Poste ciblé:</label>
                             <input
                               type='text'
                               name="target_job"
@@ -404,7 +404,7 @@ const AdvertisementCards: React.FC = () => {
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-dark font-semibold">Location:</label>
+                            <label className="block text-dark font-semibold">Localisation:</label>
                             <input
                               type='text'
                               name="location"
@@ -417,18 +417,21 @@ const AdvertisementCards: React.FC = () => {
                             type="submit"
                             className="button  rounded h-10 transition-colors hover:underline hover:text-info hover:bg-interact text-fullblack dark:text-fullwhite w-full"
                           >
-                            Apply
+                            Postuler
                           </button>
                         </form>
                       ) : (
-                        <form onSubmit={handleSubmitLogin(ad.id)} className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
-                          <p>Vous êtes connecté, vous pouvez postuler à cette offre directement, vos informations personnelles transmises seront envoyés au destinataire de l&apos;offre.</p>
+                        <form onSubmit={handleSubmitLogin(ad.id)} className="bg-fullwhite p-8 rounded-lg shadow-lg w-full  text-dark max-w-md">
+                          {successMessage && <p className="text-success text-center mb-4 font-medium">{successMessage}</p>}
+                          <div className="mb-4">
+                            <p>Vous êtes connecté, vous pouvez postuler à cette offre directement, vos informations personnelles transmises seront envoyés au destinataire de l&apos;offre.</p>
+                          </div>
 
-                          <button                            
+                          <button
                             type="submit"
-                            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+                            className="button  rounded h-10 transition-colors hover:underline hover:text-info hover:bg-interact text-fullblack dark:text-fullwhite w-full"
                           >
-                            Apply
+                            Postuler
                           </button>
                         </form>
                       )}
