@@ -128,7 +128,6 @@ const UsersComponents: React.FC = () => {
       setShowModal(false);
       setRefresh(!refresh);
     } catch (err) {
-      console.error('Error:', err);
       setError((err as Error).message);
     }
   };

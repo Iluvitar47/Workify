@@ -66,7 +66,6 @@ const AdvertisementCards: React.FC = () => {
       const data = await response.json();
       return data as Company;
     } catch (err) {
-      console.error(`Error fetching company with id ${companyId}:`, err);
       return null;
     }
   };
@@ -123,7 +122,6 @@ const AdvertisementCards: React.FC = () => {
       const dataPeople = await responsePeople.json();
 
       const getCompanyEmail = advertisements.find((ad) => ad.id === id)?.company_id;
-      console.log('getCompanyEmail', getCompanyEmail);
 
       const emailMessage: Email = {
         emailReceiver: getCompanyEmail !== undefined ? String(companies[getCompanyEmail]?.email) : '',
@@ -142,8 +140,6 @@ const AdvertisementCards: React.FC = () => {
             - Lieu: ${formData.location}
         `
       };
-
-      console.log('emailReceiver', emailMessage.emailReceiver);
 
       const requestBodyApply = {
         message: emailMessage.message,
@@ -192,9 +188,7 @@ const AdvertisementCards: React.FC = () => {
       });
 
       const dataCurrent = await responseCurrent.json();
-      console.log('dataCurrent', dataCurrent);
       const peopleCurrentId = dataCurrent.people_id;
-      console.log('peopleCurrentId', peopleCurrentId);
 
       const responsePeople = await fetch(`${urlApi}/people/id/${peopleCurrentId}`, {
         method: 'GET',
@@ -205,7 +199,6 @@ const AdvertisementCards: React.FC = () => {
       });
 
       const dataPeople = await responsePeople.json();
-      console.log('dataPeople', dataPeople);
 
       const requestBody = {
         firstname: dataPeople.firstname,
@@ -220,10 +213,7 @@ const AdvertisementCards: React.FC = () => {
         location: dataPeople.location,
       }
 
-      console.log('requestBody', requestBody);
-
       const getCompanyEmail = advertisements.find((ad) => ad.id === id)?.company_id;
-      console.log('getCompanyEmail', getCompanyEmail);
 
       const emailMessage: Email = {
         emailReceiver: getCompanyEmail !== undefined ? String(companies[getCompanyEmail]?.email) : '',
@@ -242,8 +232,6 @@ const AdvertisementCards: React.FC = () => {
             - Lieu: ${requestBody.location}
         `
       };
-
-      console.log('emailReceiver', emailMessage.emailReceiver);
 
       const requestBodyApply = {
         message: emailMessage.message,

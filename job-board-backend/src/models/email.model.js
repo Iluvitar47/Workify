@@ -3,7 +3,6 @@ require('dotenv').config();
 
 class EmailModel {
     send = async (body) => {
-        console.log(body);
         const transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST,
             port: Number(process.env.SMTP_PORT),
@@ -21,7 +20,6 @@ class EmailModel {
             text: body.message
         });
     
-        console.log('Message sent: %s', info.messageId);
         return info;
     }
 }
