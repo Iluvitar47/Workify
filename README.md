@@ -26,7 +26,7 @@ La conception du site a été réalisée sur **Figma**, permettant une collabora
 
 1. **Clonez le dépôt** :
    ```bash
-   git clone https://github.com/Iluvitar47/Workify.git
+   git clone https://github.com/TheoDeschamps/Workify.git
    ```
 
 2. **Installez les dépendances** :
