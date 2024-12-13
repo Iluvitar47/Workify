@@ -6,10 +6,10 @@ import Footer from '../../components/Footer';
 export default function Auth() {
   return (
     <>
-      <Header />
-      <LoginComponent />
+      <Header/>
+      <LoginComponent/>
       <div className=' fixed bottom-0 right-0 left-0'>
-      <Footer />
+      <Footer/>
       </div>
     </>
   );

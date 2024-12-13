@@ -44,13 +44,13 @@ const AdvertisementCards: React.FC = () => {
     fetchAdvertisements();
   }, [urlApi]); 
 
-  const toggleExpand = (id: number) => {
-    setExpandedIds((prevExpandedIds) =>
-      prevExpandedIds.includes(id)
-        ? prevExpandedIds.filter((expandedId) => expandedId !== id)
-        : [...prevExpandedIds, id],
-    );
-  };
+  const toggleExpand = (id: number) => { //fonction fléché qui prend en paramètre un id
+    setExpandedIds((prevExpandedIds) => //setExpandedIds est une fonction qui prend en paramètre prevExpandedIds, c'est une gestion de l'état
+      prevExpandedIds.includes(id) // Call-back qui vérifie si l'id est déjà dans le tableau
+        ? prevExpandedIds.filter((expandedId) => expandedId !== id) // Si l'id est déjà dans le tableau, on le retire
+        : [...prevExpandedIds, id], // Sinon, on l'ajoute
+    ); //les id sont stockés dans un tableau pour pouvoir afficher plusieurs annonces étendues en même temps
+  }; 
 
   const fetchCompany = async (companyId: number): Promise<Company | null> => {
     try {
